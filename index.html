@@ -311,6 +311,51 @@
       .verb-card { padding: 13px 12px; border-radius: 20px; }
       .jp { font-size: 21px; }
     }
+  
+
+    /* ===== v3 요청 반영: 전체 보통 굵기 + 일본어/히라가나 확대 ===== */
+    body,
+    body * {
+      font-weight: 400 !important;
+    }
+
+    .form-cell {
+      cursor: pointer !important;
+    }
+
+    .jp {
+      font-size: 30px !important;
+      line-height: 1.17 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.045em !important;
+    }
+
+    .kana {
+      font-size: 17px !important;
+      line-height: 1.28 !important;
+      font-weight: 400 !important;
+      margin-top: 6px !important;
+      letter-spacing: -0.025em !important;
+    }
+
+    @media (min-width: 440px) {
+      .jp {
+        font-size: 27px !important;
+      }
+      .kana {
+        font-size: 16px !important;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .jp {
+        font-size: 28px !important;
+      }
+      .kana {
+        font-size: 16px !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -318,7 +363,7 @@
     <header class="top">
       <div class="title-wrap">
         <h1>일본어 동사 500</h1>
-        <p class="sub">검색 후 기본형·ます형·부정형을 한 칸에서 바로 확인하고 들을 수 있습니다.</p>
+        <p class="sub">검색 후 기본형·ます형·부정형을 한 칸에서 바로 확인하고, 칸을 누르면 발음이 나옵니다.</p>
       </div>
       <div class="counter" id="topCounter">500개</div>
     </header>
@@ -331,7 +376,7 @@
 
     <div class="summary">
       <span id="resultText">검색 결과 <strong>500</strong> / 500</span>
-      <span>발음 버튼 🔊</span>
+      <span>칸을 누르면 발음</span>
     </div>
 
     <main>
@@ -340,7 +385,7 @@
     </main>
 
     <footer class="footer">
-      기존 화면 요소는 제거하고 검색 중심 카드만 남겼습니다. 발음은 브라우저의 일본어 음성 합성 기능을 사용하므로 기기별 음색이 다를 수 있습니다.
+      기존 화면 요소는 제거하고 검색 중심 카드만 남겼습니다. 각 칸을 누르면 브라우저의 일본어 음성 합성으로 발음이 재생되며, 기기별 음색이 다를 수 있습니다.
     </footer>
   </div>
 
@@ -407,13 +452,12 @@
       const label = formLabels[key];
       const aria = `${v.base.text} ${label} 발음 듣기`;
       return `
-        <div class="form-cell">
+        <div class="form-cell" data-speak="${escapeHtml(form.kana)}" role="button" tabindex="0" aria-label="${escapeHtml(aria)}">
           <div>
             <span class="label">${label}</span>
             <p class="jp">${highlight(form.text, state.query)}</p>
             <span class="kana">${highlight(form.kana, state.query)}</span>
           </div>
-          <button type="button" class="sound" data-speak="${escapeHtml(form.kana)}" aria-label="${escapeHtml(aria)}">🔊</button>
         </div>
       `;
     }
@@ -484,11 +528,18 @@
         render();
       });
       $("#verbList").addEventListener("click", (event) => {
-        const button = event.target.closest("[data-speak]");
-        if (!button) return;
+        const cell = event.target.closest(".form-cell[data-speak]");
+        if (!cell) return;
         event.preventDefault();
-        event.stopPropagation();
-        speak(button.dataset.speak);
+        speak(cell.dataset.speak);
+      });
+
+      $("#verbList").addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        const cell = event.target.closest(".form-cell[data-speak]");
+        if (!cell) return;
+        event.preventDefault();
+        speak(cell.dataset.speak);
       });
 
       render();
