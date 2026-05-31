@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>일본어 동사 500</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg1: #e0f7ff;
+      --bg2: #f8fdff;
+      --card: rgba(255,255,255,.93);
+      --line: #bae6fd;
+      --line-strong: #7dd3fc;
+      --blue: #0ea5e9;
+      --blue-dark: #0369a1;
+      --text: #0f172a;
+      --muted: #64748b;
+      --soft: #f0f9ff;
+      --yellow: #ffe16a;
+      --shadow: 0 10px 24px rgba(14, 116, 144, .08);
+    }
+    body {
+      min-width: 340px;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 54%, #eef9ff 100%);
+      color: var(--text);
+      font-family: "Pretendard", "Noto Sans KR", "Noto Sans JP", "Hiragino Sans", "Yu Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    button, input { font-family: inherit; }
+    button { border: 0; cursor: pointer; }
+    .app {
+      width: min(100%, 520px);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 18px 16px 34px;
+      background: linear-gradient(180deg, #f8fdff 0%, #eef9ff 100%);
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .title-wrap { min-width: 0; }
+    h1 {
+      margin: 0;
+      color: var(--blue-dark);
+      font-size: clamp(34px, 9vw, 44px);
+      line-height: .98;
+      font-weight: 800;
+      letter-spacing: -0.07em;
+      word-break: keep-all;
+    }
+    .sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: -0.03em;
+    }
+    .counter {
+      flex: 0 0 auto;
+      min-width: 84px;
+      padding: 10px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.82);
+      color: #111827;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 700;
+      box-shadow: none;
+    }
+    .search {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      margin-bottom: 13px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.96);
+      box-shadow: var(--shadow);
+      cursor: text;
+    }
+    .search:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(14,165,233,.14), var(--shadow);
+    }
+    .search-icon-btn,
+    .search-clear-btn {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: transparent;
+      color: var(--blue-dark);
+      font-size: 22px;
+      line-height: 1;
+      box-shadow: none;
+    }
+    .search-clear-btn {
+      display: none;
+      background: #e0f2fe;
+      color: #475569;
+      font-size: 24px;
+    }
+    .search-clear-btn.show { display: inline-flex; }
+    #searchInput {
+      flex: 1 1 auto;
+      min-width: 0;
+      width: 100%;
+      height: 38px;
+      padding: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--text);
+      caret-color: var(--blue);
+      font-size: 17px;
+      line-height: 1.2;
+      font-weight: 400;
+      letter-spacing: -0.03em;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    #searchInput::placeholder { color: var(--muted); opacity: 1; }
+    #searchInput::-webkit-search-decoration,
+    #searchInput::-webkit-search-cancel-button,
+    #searchInput::-webkit-search-results-button,
+    #searchInput::-webkit-search-results-decoration { display: none; }
+
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 11px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,.86);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .summary strong { color: var(--blue-dark); font-weight: 800; }
+    .list {
+      display: grid;
+      gap: 12px;
+    }
+    .verb-card {
+      padding: 15px 14px 14px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+    }
+    .card-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 11px;
+    }
+    .no {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #e0f2fe;
+      color: var(--blue-dark);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .meaning {
+      margin: 0;
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.25;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .hint {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.25;
+    }
+    .forms {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .form-cell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 12px;
+      border: 1px solid #d7effc;
+      border-radius: 18px;
+      background: #ffffff;
+    }
+    .label {
+      display: inline-flex;
+      width: max-content;
+      margin-bottom: 5px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--blue-dark);
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 800;
+    }
+    .jp {
+      margin: 0;
+      color: #111827;
+      font-size: 23px;
+      line-height: 1.15;
+      font-weight: 650;
+      letter-spacing: -0.04em;
+      font-kerning: none;
+      word-break: keep-all;
+    }
+    .kana {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    .sound {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      background: #e0f2fe;
+      color: var(--blue-dark);
+      font-size: 19px;
+      box-shadow: none;
+    }
+    .sound:active { transform: scale(.96); }
+    .empty {
+      display: none;
+      padding: 46px 18px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255,255,255,.92);
+      text-align: center;
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+    .empty.show { display: block; }
+    .empty strong {
+      display: block;
+      margin: 8px 0 5px;
+      color: var(--text);
+      font-size: 18px;
+    }
+    .footer {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.86);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      letter-spacing: -0.02em;
+    }
+    .highlight {
+      background: linear-gradient(transparent 60%, rgba(255,225,106,.62) 60%);
+      border-radius: 4px;
+    }
+    @media (min-width: 440px) {
+      .forms {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .form-cell {
+        min-height: 150px;
+        grid-template-columns: 1fr;
+        align-content: space-between;
+      }
+      .sound {
+        justify-self: end;
+      }
+      .jp {
+        font-size: 21px;
+      }
+    }
+    @media (max-width: 380px) {
+      .app { padding: 15px 12px 28px; }
+      .counter { min-width: 74px; padding: 9px 10px; font-size: 14px; }
+      .search { min-height: 54px; border-radius: 20px; }
+      #searchInput { font-size: 16px; }
+      .verb-card { padding: 13px 12px; border-radius: 20px; }
+      .jp { font-size: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div class="title-wrap">
+        <h1>일본어 동사 500</h1>
+        <p class="sub">검색 후 기본형·ます형·부정형을 한 칸에서 바로 확인하고 들을 수 있습니다.</p>
+      </div>
+      <div class="counter" id="topCounter">500개</div>
+    </header>
+
+    <section class="search" id="searchBox" aria-label="동사 검색">
+      <button type="button" class="search-icon-btn" id="searchIconBtn" aria-label="검색창 활성화">🔎</button>
+      <input id="searchInput" type="search" autocomplete="off" inputmode="search" placeholder="동사 / 히라가나 / 뜻 검색" />
+      <button type="button" class="search-clear-btn" id="searchClearBtn" aria-label="검색어 지우기">×</button>
+    </section>
+
+    <div class="summary">
+      <span id="resultText">검색 결과 <strong>500</strong> / 500</span>
+      <span>발음 버튼 🔊</span>
+    </div>
+
+    <main>
+      <div class="empty" id="emptyBox">🔎<strong>검색 결과가 없습니다.</strong><span>동사, 히라가나, 뜻을 다시 입력해 주세요.</span></div>
+      <div class="list" id="verbList"></div>
+    </main>
+
+    <footer class="footer">
+      기존 화면 요소는 제거하고 검색 중심 카드만 남겼습니다. 발음은 브라우저의 일본어 음성 합성 기능을 사용하므로 기기별 음색이 다를 수 있습니다.
+    </footer>
+  </div>
+
+  <script>
+    const verbs = [{"id":1,"meaning":"먹다","group":"ichidan","base":{"text":"食べる","kana":"たべる"},"masu":{"text":"食べます","kana":"たべます"},"negative":{"text":"食べない","kana":"たべない"}},{"id":2,"meaning":"마시다","group":"godan","base":{"text":"飲む","kana":"のむ"},"masu":{"text":"飲みます","kana":"のみます"},"negative":{"text":"飲まない","kana":"のまない"}},{"id":3,"meaning":"만들다","group":"godan","base":{"text":"作る","kana":"つくる"},"masu":{"text":"作ります","kana":"つくります"},"negative":{"text":"作らない","kana":"つくらない"}},{"id":4,"meaning":"굽다","group":"godan","base":{"text":"焼く","kana":"やく"},"masu":{"text":"焼きます","kana":"やきます"},"negative":{"text":"焼かない","kana":"やかない"}},{"id":5,"meaning":"삶다·끓이다","group":"ichidan","base":{"text":"煮る","kana":"にる"},"masu":{"text":"煮ます","kana":"にます"},"negative":{"text":"煮ない","kana":"にない"}},{"id":6,"meaning":"자르다","group":"godan","base":{"text":"切る","kana":"きる"},"masu":{"text":"切ります","kana":"きります"},"negative":{"text":"切らない","kana":"きらない"}},{"id":7,"meaning":"섞다","group":"ichidan","base":{"text":"混ぜる","kana":"まぜる"},"masu":{"text":"混ぜます","kana":"まぜます"},"negative":{"text":"混ぜない","kana":"まぜない"}},{"id":8,"meaning":"넣다","group":"ichidan","base":{"text":"入れる","kana":"いれる"},"masu":{"text":"入れます","kana":"いれます"},"negative":{"text":"入れない","kana":"いれない"}},{"id":9,"meaning":"내다","group":"godan","base":{"text":"出す","kana":"だす"},"masu":{"text":"出します","kana":"だします"},"negative":{"text":"出さない","kana":"ださない"}},{"id":10,"meaning":"붓다","group":"godan","base":{"text":"注ぐ","kana":"そそぐ"},"masu":{"text":"注ぎます","kana":"そそぎます"},"negative":{"text":"注がない","kana":"そそがない"}},{"id":11,"meaning":"밥을 짓다","group":"godan","base":{"text":"炊く","kana":"たく"},"masu":{"text":"炊きます","kana":"たきます"},"negative":{"text":"炊かない","kana":"たかない"}},{"id":12,"meaning":"데우다","group":"ichidan","base":{"text":"温める","kana":"あたためる"},"masu":{"text":"温めます","kana":"あたためます"},"negative":{"text":"温めない","kana":"あたためない"}},{"id":13,"meaning":"식히다","group":"godan","base":{"text":"冷ます","kana":"さます"},"masu":{"text":"冷まします","kana":"さまします"},"negative":{"text":"冷まさない","kana":"さまさない"}},{"id":14,"meaning":"차게 하다","group":"godan","base":{"text":"冷やす","kana":"ひやす"},"masu":{"text":"冷やします","kana":"ひやします"},"negative":{"text":"冷やさない","kana":"ひやさない"}},{"id":15,"meaning":"맛보다","group":"godan","base":{"text":"味わう","kana":"あじわう"},"masu":{"text":"味わいます","kana":"あじわいます"},"negative":{"text":"味わわない","kana":"あじわわない"}},{"id":16,"meaning":"씹다","group":"godan","base":{"text":"噛む","kana":"かむ"},"masu":{"text":"噛みます","kana":"かみます"},"negative":{"text":"噛まない","kana":"かまない"}},{"id":17,"meaning":"삼키다","group":"godan","base":{"text":"飲み込む","kana":"のみこむ"},"masu":{"text":"飲み込みます","kana":"のみこみます"},"negative":{"text":"飲み込まない","kana":"のみこまない"}},{"id":18,"meaning":"부탁하다·주문하다","group":"godan","base":{"text":"頼む","kana":"たのむ"},"masu":{"text":"頼みます","kana":"たのみます"},"negative":{"text":"頼まない","kana":"たのまない"}},{"id":19,"meaning":"가다","group":"godan","base":{"text":"行く","kana":"いく"},"masu":{"text":"行きます","kana":"いきます"},"negative":{"text":"行かない","kana":"いかない"}},{"id":20,"meaning":"오다","group":"kuru","base":{"text":"来る","kana":"くる"},"masu":{"text":"来ます","kana":"きます"},"negative":{"text":"来ない","kana":"こない"}},{"id":21,"meaning":"돌아가다","group":"godan","base":{"text":"帰る","kana":"かえる"},"masu":{"text":"帰ります","kana":"かえります"},"negative":{"text":"帰らない","kana":"かえらない"}},{"id":22,"meaning":"걷다","group":"godan","base":{"text":"歩く","kana":"あるく"},"masu":{"text":"歩きます","kana":"あるきます"},"negative":{"text":"歩かない","kana":"あるかない"}},{"id":23,"meaning":"달리다","group":"godan","base":{"text":"走る","kana":"はしる"},"masu":{"text":"走ります","kana":"はしります"},"negative":{"text":"走らない","kana":"はしらない"}},{"id":24,"meaning":"타다","group":"godan","base":{"text":"乗る","kana":"のる"},"masu":{"text":"乗ります","kana":"のります"},"negative":{"text":"乗らない","kana":"のらない"}},{"id":25,"meaning":"내리다","group":"ichidan","base":{"text":"降りる","kana":"おりる"},"masu":{"text":"降ります","kana":"おります"},"negative":{"text":"降りない","kana":"おりない"}},{"id":26,"meaning":"돌다·굽다","group":"godan","base":{"text":"曲がる","kana":"まがる"},"masu":{"text":"曲がります","kana":"まがります"},"negative":{"text":"曲がらない","kana":"まがらない"}},{"id":27,"meaning":"건너다","group":"godan","base":{"text":"渡る","kana":"わたる"},"masu":{"text":"渡ります","kana":"わたります"},"negative":{"text":"渡らない","kana":"わたらない"}},{"id":28,"meaning":"멈추다","group":"godan","base":{"text":"止まる","kana":"とまる"},"masu":{"text":"止まります","kana":"とまります"},"negative":{"text":"止まらない","kana":"とまらない"}},{"id":29,"meaning":"멈추게 하다","group":"ichidan","base":{"text":"止める","kana":"とめる"},"masu":{"text":"止めます","kana":"とめます"},"negative":{"text":"止めない","kana":"とめない"}},{"id":30,"meaning":"지나가다","group":"godan","base":{"text":"通る","kana":"とおる"},"masu":{"text":"通ります","kana":"とおります"},"negative":{"text":"通らない","kana":"とおらない"}},{"id":31,"meaning":"다니다","group":"godan","base":{"text":"通う","kana":"かよう"},"masu":{"text":"通います","kana":"かよいます"},"negative":{"text":"通わない","kana":"かよわない"}},{"id":32,"meaning":"외출하다","group":"ichidan","base":{"text":"出かける","kana":"でかける"},"masu":{"text":"出かけます","kana":"でかけます"},"negative":{"text":"出かけない","kana":"でかけない"}},{"id":33,"meaning":"도착하다","group":"godan","base":{"text":"着く","kana":"つく"},"masu":{"text":"着きます","kana":"つきます"},"negative":{"text":"着かない","kana":"つかない"}},{"id":34,"meaning":"되돌아가다","group":"godan","base":{"text":"戻る","kana":"もどる"},"masu":{"text":"戻ります","kana":"もどります"},"negative":{"text":"戻らない","kana":"もどらない"}},{"id":35,"meaning":"돌다","group":"godan","base":{"text":"回る","kana":"まわる"},"masu":{"text":"回ります","kana":"まわります"},"negative":{"text":"回らない","kana":"まわらない"}},{"id":36,"meaning":"돌리다","group":"godan","base":{"text":"回す","kana":"まわす"},"masu":{"text":"回します","kana":"まわします"},"negative":{"text":"回さない","kana":"まわさない"}},{"id":37,"meaning":"일어나다","group":"ichidan","base":{"text":"起きる","kana":"おきる"},"masu":{"text":"起きます","kana":"おきます"},"negative":{"text":"起きない","kana":"おきない"}},{"id":38,"meaning":"자다","group":"ichidan","base":{"text":"寝る","kana":"ねる"},"masu":{"text":"寝ます","kana":"ねます"},"negative":{"text":"寝ない","kana":"ねない"}},{"id":39,"meaning":"잠들다","group":"godan","base":{"text":"眠る","kana":"ねむる"},"masu":{"text":"眠ります","kana":"ねむります"},"negative":{"text":"眠らない","kana":"ねむらない"}},{"id":40,"meaning":"뒤집어쓰다·샤워하다","group":"ichidan","base":{"text":"浴びる","kana":"あびる"},"masu":{"text":"浴びます","kana":"あびます"},"negative":{"text":"浴びない","kana":"あびない"}},{"id":41,"meaning":"씻다","group":"godan","base":{"text":"洗う","kana":"あらう"},"masu":{"text":"洗います","kana":"あらいます"},"negative":{"text":"洗わない","kana":"あらわない"}},{"id":42,"meaning":"닦다","group":"godan","base":{"text":"磨く","kana":"みがく"},"masu":{"text":"磨きます","kana":"みがきます"},"negative":{"text":"磨かない","kana":"みがかない"}},{"id":43,"meaning":"입다","group":"ichidan","base":{"text":"着る","kana":"きる"},"masu":{"text":"着ます","kana":"きます"},"negative":{"text":"着ない","kana":"きない"}},{"id":44,"meaning":"벗다","group":"godan","base":{"text":"脱ぐ","kana":"ぬぐ"},"masu":{"text":"脱ぎます","kana":"ぬぎます"},"negative":{"text":"脱がない","kana":"ぬがない"}},{"id":45,"meaning":"신다","group":"godan","base":{"text":"履く","kana":"はく"},"masu":{"text":"履きます","kana":"はきます"},"negative":{"text":"履かない","kana":"はかない"}},{"id":46,"meaning":"쓰다","group":"godan","base":{"text":"かぶる","kana":"かぶる"},"masu":{"text":"かぶります","kana":"かぶります"},"negative":{"text":"かぶらない","kana":"かぶらない"}},{"id":47,"meaning":"정돈하다","group":"ichidan","base":{"text":"片付ける","kana":"かたづける"},"masu":{"text":"片付けます","kana":"かたづけます"},"negative":{"text":"片付けない","kana":"かたづけない"}},{"id":48,"meaning":"버리다","group":"ichidan","base":{"text":"捨てる","kana":"すてる"},"masu":{"text":"捨てます","kana":"すてます"},"negative":{"text":"捨てない","kana":"すてない"}},{"id":49,"meaning":"줍다","group":"godan","base":{"text":"拾う","kana":"ひろう"},"masu":{"text":"拾います","kana":"ひろいます"},"negative":{"text":"拾わない","kana":"ひろわない"}},{"id":50,"meaning":"찾다","group":"godan","base":{"text":"探す","kana":"さがす"},"masu":{"text":"探します","kana":"さがします"},"negative":{"text":"探さない","kana":"さがさない"}},{"id":51,"meaning":"발견하다","group":"ichidan","base":{"text":"見つける","kana":"みつける"},"masu":{"text":"見つけます","kana":"みつけます"},"negative":{"text":"見つけない","kana":"みつけない"}},{"id":52,"meaning":"잃어버리다","group":"godan","base":{"text":"なくす","kana":"なくす"},"masu":{"text":"なくします","kana":"なくします"},"negative":{"text":"なくさない","kana":"なくさない"}},{"id":53,"meaning":"사용하다","group":"godan","base":{"text":"使う","kana":"つかう"},"masu":{"text":"使います","kana":"つかいます"},"negative":{"text":"使わない","kana":"つかわない"}},{"id":54,"meaning":"넣어두다·끝내다","group":"godan","base":{"text":"しまう","kana":"しまう"},"masu":{"text":"しまいます","kana":"しまいます"},"negative":{"text":"しまわない","kana":"しまわない"}},{"id":55,"meaning":"열다","group":"ichidan","base":{"text":"開ける","kana":"あける"},"masu":{"text":"開けます","kana":"あけます"},"negative":{"text":"開けない","kana":"あけない"}},{"id":56,"meaning":"닫다","group":"ichidan","base":{"text":"閉める","kana":"しめる"},"masu":{"text":"閉めます","kana":"しめます"},"negative":{"text":"閉めない","kana":"しめない"}},{"id":57,"meaning":"켜다·붙이다","group":"ichidan","base":{"text":"つける","kana":"つける"},"masu":{"text":"つけます","kana":"つけます"},"negative":{"text":"つけない","kana":"つけない"}},{"id":58,"meaning":"끄다·지우다","group":"godan","base":{"text":"消す","kana":"けす"},"masu":{"text":"消します","kana":"けします"},"negative":{"text":"消さない","kana":"けさない"}},{"id":59,"meaning":"놓다","group":"godan","base":{"text":"置く","kana":"おく"},"masu":{"text":"置きます","kana":"おきます"},"negative":{"text":"置かない","kana":"おかない"}},{"id":60,"meaning":"잡다·취하다","group":"godan","base":{"text":"取る","kana":"とる"},"masu":{"text":"取ります","kana":"とります"},"negative":{"text":"取らない","kana":"とらない"}},{"id":61,"meaning":"가지다·들다","group":"godan","base":{"text":"持つ","kana":"もつ"},"masu":{"text":"持ちます","kana":"もちます"},"negative":{"text":"持たない","kana":"もたない"}},{"id":62,"meaning":"읽다","group":"godan","base":{"text":"読む","kana":"よむ"},"masu":{"text":"読みます","kana":"よみます"},"negative":{"text":"読まない","kana":"よまない"}},{"id":63,"meaning":"쓰다","group":"godan","base":{"text":"書く","kana":"かく"},"masu":{"text":"書きます","kana":"かきます"},"negative":{"text":"書かない","kana":"かかない"}},{"id":64,"meaning":"듣다·묻다","group":"godan","base":{"text":"聞く","kana":"きく"},"masu":{"text":"聞きます","kana":"ききます"},"negative":{"text":"聞かない","kana":"きかない"}},{"id":65,"meaning":"말하다","group":"godan","base":{"text":"話す","kana":"はなす"},"masu":{"text":"話します","kana":"はなします"},"negative":{"text":"話さない","kana":"はなさない"}},{"id":66,"meaning":"말하다","group":"godan","base":{"text":"言う","kana":"いう"},"masu":{"text":"言います","kana":"いいます"},"negative":{"text":"言わない","kana":"いわない"}},{"id":67,"meaning":"가르치다","group":"ichidan","base":{"text":"教える","kana":"おしえる"},"masu":{"text":"教えます","kana":"おしえます"},"negative":{"text":"教えない","kana":"おしえない"}},{"id":68,"meaning":"배우다","group":"godan","base":{"text":"習う","kana":"ならう"},"masu":{"text":"習います","kana":"ならいます"},"negative":{"text":"習わない","kana":"ならわない"}},{"id":69,"meaning":"외우다","group":"ichidan","base":{"text":"覚える","kana":"おぼえる"},"masu":{"text":"覚えます","kana":"おぼえます"},"negative":{"text":"覚えない","kana":"おぼえない"}},{"id":70,"meaning":"잊다","group":"ichidan","base":{"text":"忘れる","kana":"わすれる"},"masu":{"text":"忘れます","kana":"わすれます"},"negative":{"text":"忘れない","kana":"わすれない"}},{"id":71,"meaning":"생각하다","group":"ichidan","base":{"text":"考える","kana":"かんがえる"},"masu":{"text":"考えます","kana":"かんがえます"},"negative":{"text":"考えない","kana":"かんがえない"}},{"id":72,"meaning":"조사하다","group":"ichidan","base":{"text":"調べる","kana":"しらべる"},"masu":{"text":"調べます","kana":"しらべます"},"negative":{"text":"調べない","kana":"しらべない"}},{"id":73,"meaning":"대답하다","group":"ichidan","base":{"text":"答える","kana":"こたえる"},"masu":{"text":"答えます","kana":"こたえます"},"negative":{"text":"答えない","kana":"こたえない"}},{"id":74,"meaning":"만나다","group":"godan","base":{"text":"会う","kana":"あう"},"masu":{"text":"会います","kana":"あいます"},"negative":{"text":"会わない","kana":"あわない"}},{"id":75,"meaning":"기다리다","group":"godan","base":{"text":"待つ","kana":"まつ"},"masu":{"text":"待ちます","kana":"まちます"},"negative":{"text":"待たない","kana":"またない"}},{"id":76,"meaning":"부르다","group":"godan","base":{"text":"呼ぶ","kana":"よぶ"},"masu":{"text":"呼びます","kana":"よびます"},"negative":{"text":"呼ばない","kana":"よばない"}},{"id":77,"meaning":"전하다","group":"ichidan","base":{"text":"伝える","kana":"つたえる"},"masu":{"text":"伝えます","kana":"つたえます"},"negative":{"text":"伝えない","kana":"つたえない"}},{"id":78,"meaning":"돌려주다","group":"godan","base":{"text":"返す","kana":"かえす"},"masu":{"text":"返します","kana":"かえします"},"negative":{"text":"返さない","kana":"かえさない"}},{"id":79,"meaning":"보내다","group":"godan","base":{"text":"送る","kana":"おくる"},"masu":{"text":"送ります","kana":"おくります"},"negative":{"text":"送らない","kana":"おくらない"}},{"id":80,"meaning":"사과하다","group":"godan","base":{"text":"謝る","kana":"あやまる"},"masu":{"text":"謝ります","kana":"あやまります"},"negative":{"text":"謝らない","kana":"あやまらない"}},{"id":81,"meaning":"용서하다","group":"godan","base":{"text":"許す","kana":"ゆるす"},"masu":{"text":"許します","kana":"ゆるします"},"negative":{"text":"許さない","kana":"ゆるさない"}},{"id":82,"meaning":"거절하다","group":"godan","base":{"text":"断る","kana":"ことわる"},"masu":{"text":"断ります","kana":"ことわります"},"negative":{"text":"断らない","kana":"ことわらない"}},{"id":83,"meaning":"지키다","group":"godan","base":{"text":"守る","kana":"まもる"},"masu":{"text":"守ります","kana":"まもります"},"negative":{"text":"守らない","kana":"まもらない"}},{"id":84,"meaning":"보다","group":"ichidan","base":{"text":"見る","kana":"みる"},"masu":{"text":"見ます","kana":"みます"},"negative":{"text":"見ない","kana":"みない"}},{"id":85,"meaning":"보이다","group":"ichidan","base":{"text":"見える","kana":"みえる"},"masu":{"text":"見えます","kana":"みえます"},"negative":{"text":"見えない","kana":"みえない"}},{"id":86,"meaning":"들리다","group":"ichidan","base":{"text":"聞こえる","kana":"きこえる"},"masu":{"text":"聞こえます","kana":"きこえます"},"negative":{"text":"聞こえない","kana":"きこえない"}},{"id":87,"meaning":"느끼다","group":"ichidan","base":{"text":"感じる","kana":"かんじる"},"masu":{"text":"感じます","kana":"かんじます"},"negative":{"text":"感じない","kana":"かんじない"}},{"id":88,"meaning":"생각하다","group":"godan","base":{"text":"思う","kana":"おもう"},"masu":{"text":"思います","kana":"おもいます"},"negative":{"text":"思わない","kana":"おもわない"}},{"id":89,"meaning":"알다","group":"godan","base":{"text":"知る","kana":"しる"},"masu":{"text":"知ります","kana":"しります"},"negative":{"text":"知らない","kana":"しらない"}},{"id":90,"meaning":"이해하다","group":"godan","base":{"text":"分かる","kana":"わかる"},"masu":{"text":"分かります","kana":"わかります"},"negative":{"text":"分からない","kana":"わからない"}},{"id":91,"meaning":"웃다","group":"godan","base":{"text":"笑う","kana":"わらう"},"masu":{"text":"笑います","kana":"わらいます"},"negative":{"text":"笑わない","kana":"わらわない"}},{"id":92,"meaning":"울다","group":"godan","base":{"text":"泣く","kana":"なく"},"masu":{"text":"泣きます","kana":"なきます"},"negative":{"text":"泣かない","kana":"なかない"}},{"id":93,"meaning":"화내다","group":"godan","base":{"text":"怒る","kana":"おこる"},"masu":{"text":"怒ります","kana":"おこります"},"negative":{"text":"怒らない","kana":"おこらない"}},{"id":94,"meaning":"놀라다","group":"godan","base":{"text":"驚く","kana":"おどろく"},"masu":{"text":"驚きます","kana":"おどろきます"},"negative":{"text":"驚かない","kana":"おどろかない"}},{"id":95,"meaning":"기뻐하다","group":"godan","base":{"text":"喜ぶ","kana":"よろこぶ"},"masu":{"text":"喜びます","kana":"よろこびます"},"negative":{"text":"喜ばない","kana":"よろこばない"}},{"id":96,"meaning":"슬퍼하다","group":"godan","base":{"text":"悲しむ","kana":"かなしむ"},"masu":{"text":"悲しみます","kana":"かなしみます"},"negative":{"text":"悲しまない","kana":"かなしまない"}},{"id":97,"meaning":"즐기다","group":"godan","base":{"text":"楽しむ","kana":"たのしむ"},"masu":{"text":"楽しみます","kana":"たのしみます"},"negative":{"text":"楽しまない","kana":"たのしまない"}},{"id":98,"meaning":"곤란하다","group":"godan","base":{"text":"困る","kana":"こまる"},"masu":{"text":"困ります","kana":"こまります"},"negative":{"text":"困らない","kana":"こまらない"}},{"id":99,"meaning":"피곤해지다","group":"ichidan","base":{"text":"疲れる","kana":"つかれる"},"masu":{"text":"疲れます","kana":"つかれます"},"negative":{"text":"疲れない","kana":"つかれない"}},{"id":100,"meaning":"쉬다","group":"godan","base":{"text":"休む","kana":"やすむ"},"masu":{"text":"休みます","kana":"やすみます"},"negative":{"text":"休まない","kana":"やすまない"}},{"id":101,"meaning":"치유하다","group":"godan","base":{"text":"癒す","kana":"いやす"},"masu":{"text":"癒します","kana":"いやします"},"negative":{"text":"癒さない","kana":"いやさない"}},{"id":102,"meaning":"서다","group":"godan","base":{"text":"立つ","kana":"たつ"},"masu":{"text":"立ちます","kana":"たちます"},"negative":{"text":"立たない","kana":"たたない"}},{"id":103,"meaning":"앉다","group":"godan","base":{"text":"座る","kana":"すわる"},"masu":{"text":"座ります","kana":"すわります"},"negative":{"text":"座らない","kana":"すわらない"}},{"id":104,"meaning":"만지다","group":"godan","base":{"text":"触る","kana":"さわる"},"masu":{"text":"触ります","kana":"さわります"},"negative":{"text":"触らない","kana":"さわらない"}},{"id":105,"meaning":"누르다","group":"godan","base":{"text":"押す","kana":"おす"},"masu":{"text":"押します","kana":"おします"},"negative":{"text":"押さない","kana":"おさない"}},{"id":106,"meaning":"당기다","group":"godan","base":{"text":"引く","kana":"ひく"},"masu":{"text":"引きます","kana":"ひきます"},"negative":{"text":"引かない","kana":"ひかない"}},{"id":107,"meaning":"던지다","group":"ichidan","base":{"text":"投げる","kana":"なげる"},"masu":{"text":"投げます","kana":"なげます"},"negative":{"text":"投げない","kana":"なげない"}},{"id":108,"meaning":"차다","group":"godan","base":{"text":"蹴る","kana":"ける"},"masu":{"text":"蹴ります","kana":"けります"},"negative":{"text":"蹴らない","kana":"けらない"}},{"id":109,"meaning":"늘리다","group":"godan","base":{"text":"伸ばす","kana":"のばす"},"masu":{"text":"伸ばします","kana":"のばします"},"negative":{"text":"伸ばさない","kana":"のばさない"}},{"id":110,"meaning":"구부리다","group":"ichidan","base":{"text":"曲げる","kana":"まげる"},"masu":{"text":"曲げます","kana":"まげます"},"negative":{"text":"曲げない","kana":"まげない"}},{"id":111,"meaning":"수영하다","group":"godan","base":{"text":"泳ぐ","kana":"およぐ"},"masu":{"text":"泳ぎます","kana":"およぎます"},"negative":{"text":"泳がない","kana":"およがない"}},{"id":112,"meaning":"날다","group":"godan","base":{"text":"飛ぶ","kana":"とぶ"},"masu":{"text":"飛びます","kana":"とびます"},"negative":{"text":"飛ばない","kana":"とばない"}},{"id":113,"meaning":"오르다","group":"godan","base":{"text":"登る","kana":"のぼる"},"masu":{"text":"登ります","kana":"のぼります"},"negative":{"text":"登らない","kana":"のぼらない"}},{"id":114,"meaning":"떨어지다","group":"ichidan","base":{"text":"落ちる","kana":"おちる"},"masu":{"text":"落ちます","kana":"おちます"},"negative":{"text":"落ちない","kana":"おちない"}},{"id":115,"meaning":"떨어뜨리다","group":"godan","base":{"text":"落とす","kana":"おとす"},"masu":{"text":"落とします","kana":"おとします"},"negative":{"text":"落とさない","kana":"おとさない"}},{"id":116,"meaning":"넘어지다","group":"godan","base":{"text":"転ぶ","kana":"ころぶ"},"masu":{"text":"転びます","kana":"ころびます"},"negative":{"text":"転ばない","kana":"ころばない"}},{"id":117,"meaning":"쓰러지다","group":"ichidan","base":{"text":"倒れる","kana":"たおれる"},"masu":{"text":"倒れます","kana":"たおれます"},"negative":{"text":"倒れない","kana":"たおれない"}},{"id":118,"meaning":"쓰러뜨리다","group":"godan","base":{"text":"倒す","kana":"たおす"},"masu":{"text":"倒します","kana":"たおします"},"negative":{"text":"倒さない","kana":"たおさない"}},{"id":119,"meaning":"쥐다","group":"godan","base":{"text":"握る","kana":"にぎる"},"masu":{"text":"握ります","kana":"にぎります"},"negative":{"text":"握らない","kana":"にぎらない"}},{"id":120,"meaning":"놓다·떼다","group":"godan","base":{"text":"離す","kana":"はなす"},"masu":{"text":"離します","kana":"はなします"},"negative":{"text":"離さない","kana":"はなさない"}},{"id":121,"meaning":"안다","group":"godan","base":{"text":"抱く","kana":"だく"},"masu":{"text":"抱きます","kana":"だきます"},"negative":{"text":"抱かない","kana":"だかない"}},{"id":122,"meaning":"껴안다·떠안다","group":"ichidan","base":{"text":"抱える","kana":"かかえる"},"masu":{"text":"抱えます","kana":"かかえます"},"negative":{"text":"抱えない","kana":"かかえない"}},{"id":123,"meaning":"사다","group":"godan","base":{"text":"買う","kana":"かう"},"masu":{"text":"買います","kana":"かいます"},"negative":{"text":"買わない","kana":"かわない"}},{"id":124,"meaning":"팔다","group":"godan","base":{"text":"売る","kana":"うる"},"masu":{"text":"売ります","kana":"うります"},"negative":{"text":"売らない","kana":"うらない"}},{"id":125,"meaning":"지불하다","group":"godan","base":{"text":"払う","kana":"はらう"},"masu":{"text":"払います","kana":"はらいます"},"negative":{"text":"払わない","kana":"はらわない"}},{"id":126,"meaning":"빌리다","group":"ichidan","base":{"text":"借りる","kana":"かりる"},"masu":{"text":"借ります","kana":"かります"},"negative":{"text":"借りない","kana":"かりない"}},{"id":127,"meaning":"빌려주다","group":"godan","base":{"text":"貸す","kana":"かす"},"masu":{"text":"貸します","kana":"かします"},"negative":{"text":"貸さない","kana":"かさない"}},{"id":128,"meaning":"고르다","group":"godan","base":{"text":"選ぶ","kana":"えらぶ"},"masu":{"text":"選びます","kana":"えらびます"},"negative":{"text":"選ばない","kana":"えらばない"}},{"id":129,"meaning":"정하다","group":"ichidan","base":{"text":"決める","kana":"きめる"},"masu":{"text":"決めます","kana":"きめます"},"negative":{"text":"決めない","kana":"きめない"}},{"id":130,"meaning":"비교하다","group":"ichidan","base":{"text":"比べる","kana":"くらべる"},"masu":{"text":"比べます","kana":"くらべます"},"negative":{"text":"比べない","kana":"くらべない"}},{"id":131,"meaning":"지불하다","group":"godan","base":{"text":"支払う","kana":"しはらう"},"masu":{"text":"支払います","kana":"しはらいます"},"negative":{"text":"支払わない","kana":"しはらわない"}},{"id":132,"meaning":"돕다","group":"ichidan","base":{"text":"助ける","kana":"たすける"},"masu":{"text":"助けます","kana":"たすけます"},"negative":{"text":"助けない","kana":"たすけない"}},{"id":133,"meaning":"도와주다","group":"godan","base":{"text":"手伝う","kana":"てつだう"},"masu":{"text":"手伝います","kana":"てつだいます"},"negative":{"text":"手伝わない","kana":"てつだわない"}},{"id":134,"meaning":"의지하다","group":"godan","base":{"text":"頼る","kana":"たよる"},"masu":{"text":"頼ります","kana":"たよります"},"negative":{"text":"頼らない","kana":"たよらない"}},{"id":135,"meaning":"권유하다","group":"godan","base":{"text":"誘う","kana":"さそう"},"masu":{"text":"誘います","kana":"さそいます"},"negative":{"text":"誘わない","kana":"さそわない"}},{"id":136,"meaning":"맞이하다","group":"ichidan","base":{"text":"迎える","kana":"むかえる"},"masu":{"text":"迎えます","kana":"むかえます"},"negative":{"text":"迎えない","kana":"むかえない"}},{"id":137,"meaning":"칭찬하다","group":"ichidan","base":{"text":"褒める","kana":"ほめる"},"masu":{"text":"褒めます","kana":"ほめます"},"negative":{"text":"褒めない","kana":"ほめない"}},{"id":138,"meaning":"꾸짖다","group":"godan","base":{"text":"叱る","kana":"しかる"},"masu":{"text":"叱ります","kana":"しかります"},"negative":{"text":"叱らない","kana":"しからない"}},{"id":139,"meaning":"키우다","group":"ichidan","base":{"text":"育てる","kana":"そだてる"},"masu":{"text":"育てます","kana":"そだてます"},"negative":{"text":"育てない","kana":"そだてない"}},{"id":140,"meaning":"지탱하다","group":"ichidan","base":{"text":"支える","kana":"ささえる"},"masu":{"text":"支えます","kana":"ささえます"},"negative":{"text":"支えない","kana":"ささえない"}},{"id":141,"meaning":"믿다","group":"ichidan","base":{"text":"信じる","kana":"しんじる"},"masu":{"text":"信じます","kana":"しんじます"},"negative":{"text":"信じない","kana":"しんじない"}},{"id":142,"meaning":"의심하다","group":"godan","base":{"text":"疑う","kana":"うたがう"},"masu":{"text":"疑います","kana":"うたがいます"},"negative":{"text":"疑わない","kana":"うたがわない"}},{"id":143,"meaning":"사랑하다","group":"suru","base":{"text":"愛する","kana":"あいする"},"masu":{"text":"愛します","kana":"あいします"},"negative":{"text":"愛しない","kana":"あいしない"}},{"id":144,"meaning":"사귀다","group":"godan","base":{"text":"付き合う","kana":"つきあう"},"masu":{"text":"付き合います","kana":"つきあいます"},"negative":{"text":"付き合わない","kana":"つきあわない"}},{"id":145,"meaning":"헤어지다","group":"ichidan","base":{"text":"別れる","kana":"わかれる"},"masu":{"text":"別れます","kana":"わかれます"},"negative":{"text":"別れない","kana":"わかれない"}},{"id":146,"meaning":"되다","group":"godan","base":{"text":"なる","kana":"なる"},"masu":{"text":"なります","kana":"なります"},"negative":{"text":"ならない","kana":"ならない"}},{"id":147,"meaning":"바뀌다","group":"godan","base":{"text":"変わる","kana":"かわる"},"masu":{"text":"変わります","kana":"かわります"},"negative":{"text":"変わらない","kana":"かわらない"}},{"id":148,"meaning":"바꾸다","group":"ichidan","base":{"text":"変える","kana":"かえる"},"masu":{"text":"変えます","kana":"かえます"},"negative":{"text":"変えない","kana":"かえない"}},{"id":149,"meaning":"시작되다","group":"godan","base":{"text":"始まる","kana":"はじまる"},"masu":{"text":"始まります","kana":"はじまります"},"negative":{"text":"始まらない","kana":"はじまらない"}},{"id":150,"meaning":"시작하다","group":"ichidan","base":{"text":"始める","kana":"はじめる"},"masu":{"text":"始めます","kana":"はじめます"},"negative":{"text":"始めない","kana":"はじめない"}},{"id":151,"meaning":"끝나다","group":"godan","base":{"text":"終わる","kana":"おわる"},"masu":{"text":"終わります","kana":"おわります"},"negative":{"text":"終わらない","kana":"おわらない"}},{"id":152,"meaning":"끝내다","group":"ichidan","base":{"text":"終える","kana":"おえる"},"masu":{"text":"終えます","kana":"おえます"},"negative":{"text":"終えない","kana":"おえない"}},{"id":153,"meaning":"계속되다","group":"godan","base":{"text":"続く","kana":"つづく"},"masu":{"text":"続きます","kana":"つづきます"},"negative":{"text":"続かない","kana":"つづかない"}},{"id":154,"meaning":"계속하다","group":"ichidan","base":{"text":"続ける","kana":"つづける"},"masu":{"text":"続けます","kana":"つづけます"},"negative":{"text":"続けない","kana":"つづけない"}},{"id":155,"meaning":"늘다","group":"ichidan","base":{"text":"増える","kana":"ふえる"},"masu":{"text":"増えます","kana":"ふえます"},"negative":{"text":"増えない","kana":"ふえない"}},{"id":156,"meaning":"늘리다","group":"godan","base":{"text":"増やす","kana":"ふやす"},"masu":{"text":"増やします","kana":"ふやします"},"negative":{"text":"増やさない","kana":"ふやさない"}},{"id":157,"meaning":"줄다","group":"godan","base":{"text":"減る","kana":"へる"},"masu":{"text":"減ります","kana":"へります"},"negative":{"text":"減らない","kana":"へらない"}},{"id":158,"meaning":"줄이다","group":"godan","base":{"text":"減らす","kana":"へらす"},"masu":{"text":"減らします","kana":"へらします"},"negative":{"text":"減らさない","kana":"へらさない"}},{"id":159,"meaning":"오르다","group":"godan","base":{"text":"上がる","kana":"あがる"},"masu":{"text":"上がります","kana":"あがります"},"negative":{"text":"上がらない","kana":"あがらない"}},{"id":160,"meaning":"올리다","group":"ichidan","base":{"text":"上げる","kana":"あげる"},"masu":{"text":"上げます","kana":"あげます"},"negative":{"text":"上げない","kana":"あげない"}},{"id":161,"meaning":"내려가다","group":"godan","base":{"text":"下がる","kana":"さがる"},"masu":{"text":"下がります","kana":"さがります"},"negative":{"text":"下がらない","kana":"さがらない"}},{"id":162,"meaning":"내리다","group":"ichidan","base":{"text":"下げる","kana":"さげる"},"masu":{"text":"下げます","kana":"さげます"},"negative":{"text":"下げない","kana":"さげない"}},{"id":163,"meaning":"들어가다","group":"godan","base":{"text":"入る","kana":"はいる"},"masu":{"text":"入ります","kana":"はいります"},"negative":{"text":"入らない","kana":"はいらない"}},{"id":164,"meaning":"나오다","group":"ichidan","base":{"text":"出る","kana":"でる"},"masu":{"text":"出ます","kana":"でます"},"negative":{"text":"出ない","kana":"でない"}},{"id":165,"meaning":"열리다·열다","group":"godan","base":{"text":"開く","kana":"ひらく"},"masu":{"text":"開きます","kana":"ひらきます"},"negative":{"text":"開かない","kana":"ひらかない"}},{"id":166,"meaning":"닫히다","group":"godan","base":{"text":"閉まる","kana":"しまる"},"masu":{"text":"閉まります","kana":"しまります"},"negative":{"text":"閉まらない","kana":"しまらない"}},{"id":167,"meaning":"고장나다","group":"ichidan","base":{"text":"壊れる","kana":"こわれる"},"masu":{"text":"壊れます","kana":"こわれます"},"negative":{"text":"壊れない","kana":"こわれない"}},{"id":168,"meaning":"고장내다","group":"godan","base":{"text":"壊す","kana":"こわす"},"masu":{"text":"壊します","kana":"こわします"},"negative":{"text":"壊さない","kana":"こわさない"}},{"id":169,"meaning":"고쳐지다","group":"godan","base":{"text":"直る","kana":"なおる"},"masu":{"text":"直ります","kana":"なおります"},"negative":{"text":"直らない","kana":"なおらない"}},{"id":170,"meaning":"고치다","group":"godan","base":{"text":"直す","kana":"なおす"},"masu":{"text":"直します","kana":"なおします"},"negative":{"text":"直さない","kana":"なおさない"}},{"id":171,"meaning":"낫다","group":"godan","base":{"text":"治る","kana":"なおる"},"masu":{"text":"治ります","kana":"なおります"},"negative":{"text":"治らない","kana":"なおらない"}},{"id":172,"meaning":"치료하다","group":"godan","base":{"text":"治す","kana":"なおす"},"masu":{"text":"治します","kana":"なおします"},"negative":{"text":"治さない","kana":"なおさない"}},{"id":173,"meaning":"정해지다","group":"godan","base":{"text":"決まる","kana":"きまる"},"masu":{"text":"決まります","kana":"きまります"},"negative":{"text":"決まらない","kana":"きまらない"}},{"id":174,"meaning":"남다","group":"godan","base":{"text":"残る","kana":"のこる"},"masu":{"text":"残ります","kana":"のこります"},"negative":{"text":"残らない","kana":"のこらない"}},{"id":175,"meaning":"남기다","group":"godan","base":{"text":"残す","kana":"のこす"},"masu":{"text":"残します","kana":"のこします"},"negative":{"text":"残さない","kana":"のこさない"}},{"id":176,"meaning":"사라지다","group":"ichidan","base":{"text":"消える","kana":"きえる"},"masu":{"text":"消えます","kana":"きえます"},"negative":{"text":"消えない","kana":"きえない"}},{"id":177,"meaning":"놀다","group":"godan","base":{"text":"遊ぶ","kana":"あそぶ"},"masu":{"text":"遊びます","kana":"あそびます"},"negative":{"text":"遊ばない","kana":"あそばない"}},{"id":178,"meaning":"노래하다","group":"godan","base":{"text":"歌う","kana":"うたう"},"masu":{"text":"歌います","kana":"うたいます"},"negative":{"text":"歌わない","kana":"うたわない"}},{"id":179,"meaning":"춤추다","group":"godan","base":{"text":"踊る","kana":"おどる"},"masu":{"text":"踊ります","kana":"おどります"},"negative":{"text":"踊らない","kana":"おどらない"}},{"id":180,"meaning":"그리다","group":"godan","base":{"text":"描く","kana":"えがく"},"masu":{"text":"描きます","kana":"えがきます"},"negative":{"text":"描かない","kana":"えがかない"}},{"id":181,"meaning":"찍다","group":"godan","base":{"text":"撮る","kana":"とる"},"masu":{"text":"撮ります","kana":"とります"},"negative":{"text":"撮らない","kana":"とらない"}},{"id":182,"meaning":"연주하다","group":"godan","base":{"text":"弾く","kana":"ひく"},"masu":{"text":"弾きます","kana":"ひきます"},"negative":{"text":"弾かない","kana":"ひかない"}},{"id":183,"meaning":"낚시하다","group":"godan","base":{"text":"釣る","kana":"つる"},"masu":{"text":"釣ります","kana":"つります"},"negative":{"text":"釣らない","kana":"つらない"}},{"id":184,"meaning":"모으다","group":"ichidan","base":{"text":"集める","kana":"あつめる"},"masu":{"text":"集めます","kana":"あつめます"},"negative":{"text":"集めない","kana":"あつめない"}},{"id":185,"meaning":"맑아지다","group":"ichidan","base":{"text":"晴れる","kana":"はれる"},"masu":{"text":"晴れます","kana":"はれます"},"negative":{"text":"晴れない","kana":"はれない"}},{"id":186,"meaning":"흐려지다","group":"godan","base":{"text":"曇る","kana":"くもる"},"masu":{"text":"曇ります","kana":"くもります"},"negative":{"text":"曇らない","kana":"くもらない"}},{"id":187,"meaning":"내리다","group":"godan","base":{"text":"降る","kana":"ふる"},"masu":{"text":"降ります","kana":"ふります"},"negative":{"text":"降らない","kana":"ふらない"}},{"id":188,"meaning":"불다","group":"godan","base":{"text":"吹く","kana":"ふく"},"masu":{"text":"吹きます","kana":"ふきます"},"negative":{"text":"吹かない","kana":"ふかない"}},{"id":189,"meaning":"쌓이다","group":"godan","base":{"text":"積もる","kana":"つもる"},"masu":{"text":"積もります","kana":"つもります"},"negative":{"text":"積もらない","kana":"つもらない"}},{"id":190,"meaning":"마르다","group":"godan","base":{"text":"乾く","kana":"かわく"},"masu":{"text":"乾きます","kana":"かわきます"},"negative":{"text":"乾かない","kana":"かわかない"}},{"id":191,"meaning":"젖다","group":"ichidan","base":{"text":"濡れる","kana":"ぬれる"},"masu":{"text":"濡れます","kana":"ぬれます"},"negative":{"text":"濡れない","kana":"ぬれない"}},{"id":192,"meaning":"아프다","group":"godan","base":{"text":"痛む","kana":"いたむ"},"masu":{"text":"痛みます","kana":"いたみます"},"negative":{"text":"痛まない","kana":"いたまない"}},{"id":193,"meaning":"감기에 걸리다","group":"godan","base":{"text":"ひく","kana":"ひく"},"masu":{"text":"ひきます","kana":"ひきます"},"negative":{"text":"ひかない","kana":"ひかない"}},{"id":194,"meaning":"있다","group":"aru","base":{"text":"ある","kana":"ある"},"masu":{"text":"あります","kana":"あります"},"negative":{"text":"ない","kana":"ない"}},{"id":195,"meaning":"있다","group":"ichidan","base":{"text":"いる","kana":"いる"},"masu":{"text":"います","kana":"います"},"negative":{"text":"いない","kana":"いない"}},{"id":196,"meaning":"할 수 있다","group":"ichidan","base":{"text":"できる","kana":"できる"},"masu":{"text":"できます","kana":"できます"},"negative":{"text":"できない","kana":"できない"}},{"id":197,"meaning":"필요하다","group":"godan","base":{"text":"要る","kana":"いる"},"masu":{"text":"要ります","kana":"いります"},"negative":{"text":"要らない","kana":"いらない"}},{"id":198,"meaning":"나누다","group":"ichidan","base":{"text":"分ける","kana":"わける"},"masu":{"text":"分けます","kana":"わけます"},"negative":{"text":"分けない","kana":"わけない"}},{"id":199,"meaning":"맞다","group":"godan","base":{"text":"合う","kana":"あう"},"masu":{"text":"合います","kana":"あいます"},"negative":{"text":"合わない","kana":"あわない"}},{"id":200,"meaning":"맞추다","group":"ichidan","base":{"text":"合わせる","kana":"あわせる"},"masu":{"text":"合わせます","kana":"あわせます"},"negative":{"text":"合わせない","kana":"あわせない"}},{"id":201,"meaning":"늦다","group":"ichidan","base":{"text":"遅れる","kana":"おくれる"},"masu":{"text":"遅れます","kana":"おくれます"},"negative":{"text":"遅れない","kana":"おくれない"}},{"id":202,"meaning":"서두르다","group":"godan","base":{"text":"急ぐ","kana":"いそぐ"},"masu":{"text":"急ぎます","kana":"いそぎます"},"negative":{"text":"急がない","kana":"いそがない"}},{"id":203,"meaning":"헤매다·망설이다","group":"godan","base":{"text":"迷う","kana":"まよう"},"masu":{"text":"迷います","kana":"まよいます"},"negative":{"text":"迷わない","kana":"まよわない"}},{"id":204,"meaning":"줄서다","group":"godan","base":{"text":"並ぶ","kana":"ならぶ"},"masu":{"text":"並びます","kana":"ならびます"},"negative":{"text":"並ばない","kana":"ならばない"}},{"id":205,"meaning":"늘어놓다","group":"ichidan","base":{"text":"並べる","kana":"ならべる"},"masu":{"text":"並べます","kana":"ならべます"},"negative":{"text":"並べない","kana":"ならべない"}},{"id":206,"meaning":"건네다","group":"godan","base":{"text":"渡す","kana":"わたす"},"masu":{"text":"渡します","kana":"わたします"},"negative":{"text":"渡さない","kana":"わたさない"}},{"id":207,"meaning":"받다","group":"ichidan","base":{"text":"受ける","kana":"うける"},"masu":{"text":"受けます","kana":"うけます"},"negative":{"text":"受けない","kana":"うけない"}},{"id":208,"meaning":"합격하다","group":"godan","base":{"text":"受かる","kana":"うかる"},"masu":{"text":"受かります","kana":"うかります"},"negative":{"text":"受からない","kana":"うからない"}},{"id":209,"meaning":"진정하다","group":"godan","base":{"text":"落ち着く","kana":"おちつく"},"masu":{"text":"落ち着きます","kana":"おちつきます"},"negative":{"text":"落ち着かない","kana":"おちつかない"}},{"id":210,"meaning":"익숙해지다","group":"ichidan","base":{"text":"慣れる","kana":"なれる"},"masu":{"text":"慣れます","kana":"なれます"},"negative":{"text":"慣れない","kana":"なれない"}},{"id":211,"meaning":"닮다","group":"ichidan","base":{"text":"似る","kana":"にる"},"masu":{"text":"似ます","kana":"にます"},"negative":{"text":"似ない","kana":"にない"}},{"id":212,"meaning":"다르다","group":"godan","base":{"text":"違う","kana":"ちがう"},"masu":{"text":"違います","kana":"ちがいます"},"negative":{"text":"違わない","kana":"ちがわない"}},{"id":213,"meaning":"숙박하다","group":"godan","base":{"text":"泊まる","kana":"とまる"},"masu":{"text":"泊まります","kana":"とまります"},"negative":{"text":"泊まらない","kana":"とまらない"}},{"id":214,"meaning":"살다","group":"godan","base":{"text":"住む","kana":"すむ"},"masu":{"text":"住みます","kana":"すみます"},"negative":{"text":"住まない","kana":"すまない"}},{"id":215,"meaning":"일하다","group":"godan","base":{"text":"働く","kana":"はたらく"},"masu":{"text":"働きます","kana":"はたらきます"},"negative":{"text":"働かない","kana":"はたらかない"}},{"id":216,"meaning":"쉬게 하다","group":"ichidan","base":{"text":"休める","kana":"やすめる"},"masu":{"text":"休めます","kana":"やすめます"},"negative":{"text":"休めない","kana":"やすめない"}},{"id":217,"meaning":"보여주다","group":"ichidan","base":{"text":"見せる","kana":"みせる"},"masu":{"text":"見せます","kana":"みせます"},"negative":{"text":"見せない","kana":"みせない"}},{"id":218,"meaning":"다시 보다","group":"godan","base":{"text":"見直す","kana":"みなおす"},"masu":{"text":"見直します","kana":"みなおします"},"negative":{"text":"見直さない","kana":"みなおさない"}},{"id":219,"meaning":"다시 읽다","group":"godan","base":{"text":"読み返す","kana":"よみかえす"},"masu":{"text":"読み返します","kana":"よみかえします"},"negative":{"text":"読み返さない","kana":"よみかえさない"}},{"id":220,"meaning":"고쳐 쓰다","group":"godan","base":{"text":"書き直す","kana":"かきなおす"},"masu":{"text":"書き直します","kana":"かきなおします"},"negative":{"text":"書き直さない","kana":"かきなおさない"}},{"id":221,"meaning":"꺼내다","group":"godan","base":{"text":"取り出す","kana":"とりだす"},"masu":{"text":"取り出します","kana":"とりだします"},"negative":{"text":"取り出さない","kana":"とりださない"}},{"id":222,"meaning":"교체하다","group":"ichidan","base":{"text":"取り替える","kana":"とりかえる"},"masu":{"text":"取り替えます","kana":"とりかえます"},"negative":{"text":"取り替えない","kana":"とりかえない"}},{"id":223,"meaning":"취소하다","group":"godan","base":{"text":"取り消す","kana":"とりけす"},"masu":{"text":"取り消します","kana":"とりけします"},"negative":{"text":"取り消さない","kana":"とりけさない"}},{"id":224,"meaning":"받아들다","group":"godan","base":{"text":"受け取る","kana":"うけとる"},"masu":{"text":"受け取ります","kana":"うけとります"},"negative":{"text":"受け取らない","kana":"うけとらない"}},{"id":225,"meaning":"신청하다","group":"godan","base":{"text":"申し込む","kana":"もうしこむ"},"masu":{"text":"申し込みます","kana":"もうしこみます"},"negative":{"text":"申し込まない","kana":"もうしこまない"}},{"id":226,"meaning":"말씀드리다","group":"ichidan","base":{"text":"申し上げる","kana":"もうしあげる"},"masu":{"text":"申し上げます","kana":"もうしあげます"},"negative":{"text":"申し上げない","kana":"もうしあげない"}},{"id":227,"meaning":"바라다","group":"godan","base":{"text":"願う","kana":"ねがう"},"masu":{"text":"願います","kana":"ねがいます"},"negative":{"text":"願わない","kana":"ねがわない"}},{"id":228,"meaning":"기도하다","group":"godan","base":{"text":"祈る","kana":"いのる"},"masu":{"text":"祈ります","kana":"いのります"},"negative":{"text":"祈らない","kana":"いのらない"}},{"id":229,"meaning":"축하하다","group":"godan","base":{"text":"祝う","kana":"いわう"},"masu":{"text":"祝います","kana":"いわいます"},"negative":{"text":"祝わない","kana":"いわわない"}},{"id":230,"meaning":"불러내다","group":"godan","base":{"text":"呼び出す","kana":"よびだす"},"masu":{"text":"呼び出します","kana":"よびだします"},"negative":{"text":"呼び出さない","kana":"よびださない"}},{"id":231,"meaning":"도망치다","group":"ichidan","base":{"text":"逃げる","kana":"にげる"},"masu":{"text":"逃げます","kana":"にげます"},"negative":{"text":"逃げない","kana":"にげない"}},{"id":232,"meaning":"쫓다","group":"godan","base":{"text":"追う","kana":"おう"},"masu":{"text":"追います","kana":"おいます"},"negative":{"text":"追わない","kana":"おわない"}},{"id":233,"meaning":"뒤쫓다","group":"ichidan","base":{"text":"追いかける","kana":"おいかける"},"masu":{"text":"追いかけます","kana":"おいかけます"},"negative":{"text":"追いかけない","kana":"おいかけない"}},{"id":234,"meaning":"끝까지 지키다","group":"godan","base":{"text":"守り抜く","kana":"まもりぬく"},"masu":{"text":"守り抜きます","kana":"まもりぬきます"},"negative":{"text":"守り抜かない","kana":"まもりぬかない"}},{"id":235,"meaning":"갈아타다","group":"ichidan","base":{"text":"乗り換える","kana":"のりかえる"},"masu":{"text":"乗り換えます","kana":"のりかえます"},"negative":{"text":"乗り換えない","kana":"のりかえない"}},{"id":236,"meaning":"이사하다","group":"godan","base":{"text":"引っ越す","kana":"ひっこす"},"masu":{"text":"引っ越します","kana":"ひっこします"},"negative":{"text":"引っ越さない","kana":"ひっこさない"}},{"id":237,"meaning":"꺼내다·인출하다","group":"godan","base":{"text":"引き出す","kana":"ひきだす"},"masu":{"text":"引き出します","kana":"ひきだします"},"negative":{"text":"引き出さない","kana":"ひきださない"}},{"id":238,"meaning":"맡다","group":"ichidan","base":{"text":"引き受ける","kana":"ひきうける"},"masu":{"text":"引き受けます","kana":"ひきうけます"},"negative":{"text":"引き受けない","kana":"ひきうけない"}},{"id":239,"meaning":"되돌아가다","group":"godan","base":{"text":"引き返す","kana":"ひきかえす"},"masu":{"text":"引き返します","kana":"ひきかえします"},"negative":{"text":"引き返さない","kana":"ひきかえさない"}},{"id":240,"meaning":"써넣다","group":"godan","base":{"text":"書き込む","kana":"かきこむ"},"masu":{"text":"書き込みます","kana":"かきこみます"},"negative":{"text":"書き込まない","kana":"かきこまない"}},{"id":241,"meaning":"소리 내어 읽다","group":"ichidan","base":{"text":"読み上げる","kana":"よみあげる"},"masu":{"text":"読み上げます","kana":"よみあげます"},"negative":{"text":"読み上げない","kana":"よみあげない"}},{"id":242,"meaning":"되묻다","group":"godan","base":{"text":"聞き返す","kana":"ききかえす"},"masu":{"text":"聞き返します","kana":"ききかえします"},"negative":{"text":"聞き返さない","kana":"ききかえさない"}},{"id":243,"meaning":"알아듣다","group":"godan","base":{"text":"聞き取る","kana":"ききとる"},"masu":{"text":"聞き取ります","kana":"ききとります"},"negative":{"text":"聞き取らない","kana":"ききとらない"}},{"id":244,"meaning":"의논하다","group":"godan","base":{"text":"話し合う","kana":"はなしあう"},"masu":{"text":"話し合います","kana":"はなしあいます"},"negative":{"text":"話し合わない","kana":"はなしあわない"}},{"id":245,"meaning":"떠올리다","group":"godan","base":{"text":"思い出す","kana":"おもいだす"},"masu":{"text":"思い出します","kana":"おもいだします"},"negative":{"text":"思い出さない","kana":"おもいださない"}},{"id":246,"meaning":"생각해내다","group":"godan","base":{"text":"思いつく","kana":"おもいつく"},"masu":{"text":"思いつきます","kana":"おもいつきます"},"negative":{"text":"思いつかない","kana":"おもいつかない"}},{"id":247,"meaning":"들어 올리다","group":"ichidan","base":{"text":"持ち上げる","kana":"もちあげる"},"masu":{"text":"持ち上げます","kana":"もちあげます"},"negative":{"text":"持ち上げない","kana":"もちあげない"}},{"id":248,"meaning":"가지고 돌아가다","group":"godan","base":{"text":"持ち帰る","kana":"もちかえる"},"masu":{"text":"持ち帰ります","kana":"もちかえります"},"negative":{"text":"持ち帰らない","kana":"もちかえらない"}},{"id":249,"meaning":"가져오다","group":"godan","base":{"text":"持ち込む","kana":"もちこむ"},"masu":{"text":"持ち込みます","kana":"もちこみます"},"negative":{"text":"持ち込まない","kana":"もちこまない"}},{"id":250,"meaning":"치다","group":"godan","base":{"text":"打つ","kana":"うつ"},"masu":{"text":"打ちます","kana":"うちます"},"negative":{"text":"打たない","kana":"うたない"}},{"id":251,"meaning":"사전 협의하다","group":"ichidan","base":{"text":"打ち合わせる","kana":"うちあわせる"},"masu":{"text":"打ち合わせます","kana":"うちあわせます"},"negative":{"text":"打ち合わせない","kana":"うちあわせない"}},{"id":252,"meaning":"이기다","group":"godan","base":{"text":"勝つ","kana":"かつ"},"masu":{"text":"勝ちます","kana":"かちます"},"negative":{"text":"勝たない","kana":"かたない"}},{"id":253,"meaning":"지다","group":"ichidan","base":{"text":"負ける","kana":"まける"},"masu":{"text":"負けます","kana":"まけます"},"negative":{"text":"負けない","kana":"まけない"}},{"id":254,"meaning":"늘다","group":"godan","base":{"text":"増す","kana":"ます"},"masu":{"text":"増します","kana":"まします"},"negative":{"text":"増さない","kana":"まさない"}},{"id":255,"meaning":"늘어나다","group":"ichidan","base":{"text":"伸びる","kana":"のびる"},"masu":{"text":"伸びます","kana":"のびます"},"negative":{"text":"伸びない","kana":"のびない"}},{"id":256,"meaning":"줄어들다","group":"godan","base":{"text":"縮む","kana":"ちぢむ"},"masu":{"text":"縮みます","kana":"ちぢみます"},"negative":{"text":"縮まない","kana":"ちぢまない"}},{"id":257,"meaning":"되돌리다","group":"godan","base":{"text":"戻す","kana":"もどす"},"masu":{"text":"戻します","kana":"もどします"},"negative":{"text":"戻さない","kana":"もどさない"}},{"id":258,"meaning":"쓰러져 들어가다","group":"godan","base":{"text":"倒れ込む","kana":"たおれこむ"},"masu":{"text":"倒れ込みます","kana":"たおれこみます"},"negative":{"text":"倒れ込まない","kana":"たおれこまない"}},{"id":259,"meaning":"뛰어들다","group":"godan","base":{"text":"飛び込む","kana":"とびこむ"},"masu":{"text":"飛び込みます","kana":"とびこみます"},"negative":{"text":"飛び込まない","kana":"とびこまない"}},{"id":260,"meaning":"뛰쳐나오다","group":"godan","base":{"text":"飛び出す","kana":"とびだす"},"masu":{"text":"飛び出します","kana":"とびだします"},"negative":{"text":"飛び出さない","kana":"とびださない"}},{"id":261,"meaning":"나서다","group":"godan","base":{"text":"乗り出す","kana":"のりだす"},"masu":{"text":"乗り出します","kana":"のりだします"},"negative":{"text":"乗り出さない","kana":"のりださない"}},{"id":262,"meaning":"반복하다","group":"godan","base":{"text":"繰り返す","kana":"くりかえす"},"masu":{"text":"繰り返します","kana":"くりかえします"},"negative":{"text":"繰り返さない","kana":"くりかえさない"}},{"id":263,"meaning":"잇다","group":"godan","base":{"text":"繋ぐ","kana":"つなぐ"},"masu":{"text":"繋ぎます","kana":"つなぎます"},"negative":{"text":"繋がない","kana":"つながない"}},{"id":264,"meaning":"이어지다","group":"godan","base":{"text":"繋がる","kana":"つながる"},"masu":{"text":"繋がります","kana":"つながります"},"negative":{"text":"繋がらない","kana":"つながらない"}},{"id":265,"meaning":"포함하다","group":"godan","base":{"text":"含む","kana":"ふくむ"},"masu":{"text":"含みます","kana":"ふくみます"},"negative":{"text":"含まない","kana":"ふくまない"}},{"id":266,"meaning":"포함시키다","group":"ichidan","base":{"text":"含める","kana":"ふくめる"},"masu":{"text":"含めます","kana":"ふくめます"},"negative":{"text":"含めない","kana":"ふくめない"}},{"id":267,"meaning":"다시 고르다","group":"godan","base":{"text":"選び直す","kana":"えらびなおす"},"masu":{"text":"選び直します","kana":"えらびなおします"},"negative":{"text":"選び直さない","kana":"えらびなおさない"}},{"id":268,"meaning":"재배열하다","group":"ichidan","base":{"text":"並び替える","kana":"ならびかえる"},"masu":{"text":"並び替えます","kana":"ならびかえます"},"negative":{"text":"並び替えない","kana":"ならびかえない"}},{"id":269,"meaning":"주문하다","group":"suru","base":{"text":"注文する","kana":"ちゅうもんする"},"masu":{"text":"注文します","kana":"ちゅうもんします"},"negative":{"text":"注文しない","kana":"ちゅうもんしない"}},{"id":270,"meaning":"청소하다","group":"suru","base":{"text":"掃除する","kana":"そうじする"},"masu":{"text":"掃除します","kana":"そうじします"},"negative":{"text":"掃除しない","kana":"そうじしない"}},{"id":271,"meaning":"세탁하다","group":"suru","base":{"text":"洗濯する","kana":"せんたくする"},"masu":{"text":"洗濯します","kana":"せんたくします"},"negative":{"text":"洗濯しない","kana":"せんたくしない"}},{"id":272,"meaning":"요리하다","group":"suru","base":{"text":"料理する","kana":"りょうりする"},"masu":{"text":"料理します","kana":"りょうりします"},"negative":{"text":"料理しない","kana":"りょうりしない"}},{"id":273,"meaning":"운동하다","group":"suru","base":{"text":"運動する","kana":"うんどうする"},"masu":{"text":"運動します","kana":"うんどうします"},"negative":{"text":"運動しない","kana":"うんどうしない"}},{"id":274,"meaning":"산책하다","group":"suru","base":{"text":"散歩する","kana":"さんぽする"},"masu":{"text":"散歩します","kana":"さんぽします"},"negative":{"text":"散歩しない","kana":"さんぽしない"}},{"id":275,"meaning":"쇼핑하다","group":"suru","base":{"text":"買い物する","kana":"かいものする"},"masu":{"text":"買い物します","kana":"かいものします"},"negative":{"text":"買い物しない","kana":"かいものしない"}},{"id":276,"meaning":"일하다","group":"suru","base":{"text":"仕事する","kana":"しごとする"},"masu":{"text":"仕事します","kana":"しごとします"},"negative":{"text":"仕事しない","kana":"しごとしない"}},{"id":277,"meaning":"생활하다","group":"suru","base":{"text":"生活する","kana":"せいかつする"},"masu":{"text":"生活します","kana":"せいかつします"},"negative":{"text":"生活しない","kana":"せいかつしない"}},{"id":278,"meaning":"연락하다","group":"suru","base":{"text":"連絡する","kana":"れんらくする"},"masu":{"text":"連絡します","kana":"れんらくします"},"negative":{"text":"連絡しない","kana":"れんらくしない"}},{"id":279,"meaning":"전화하다","group":"suru","base":{"text":"電話する","kana":"でんわする"},"masu":{"text":"電話します","kana":"でんわします"},"negative":{"text":"電話しない","kana":"でんわしない"}},{"id":280,"meaning":"메일하다","group":"suru","base":{"text":"メールする","kana":"メールする"},"masu":{"text":"メールします","kana":"メールします"},"negative":{"text":"メールしない","kana":"メールしない"}},{"id":281,"meaning":"상담하다","group":"suru","base":{"text":"相談する","kana":"そうだんする"},"masu":{"text":"相談します","kana":"そうだんします"},"negative":{"text":"相談しない","kana":"そうだんしない"}},{"id":282,"meaning":"질문하다","group":"suru","base":{"text":"質問する","kana":"しつもんする"},"masu":{"text":"質問します","kana":"しつもんします"},"negative":{"text":"質問しない","kana":"しつもんしない"}},{"id":283,"meaning":"답변하다","group":"suru","base":{"text":"回答する","kana":"かいとうする"},"masu":{"text":"回答します","kana":"かいとうします"},"negative":{"text":"回答しない","kana":"かいとうしない"}},{"id":284,"meaning":"설명하다","group":"suru","base":{"text":"説明する","kana":"せつめいする"},"masu":{"text":"説明します","kana":"せつめいします"},"negative":{"text":"説明しない","kana":"せつめいしない"}},{"id":285,"meaning":"소개하다","group":"suru","base":{"text":"紹介する","kana":"しょうかいする"},"masu":{"text":"紹介します","kana":"しょうかいします"},"negative":{"text":"紹介しない","kana":"しょうかいしない"}},{"id":286,"meaning":"안내하다","group":"suru","base":{"text":"案内する","kana":"あんないする"},"masu":{"text":"案内します","kana":"あんないします"},"negative":{"text":"案内しない","kana":"あんないしない"}},{"id":287,"meaning":"예약하다","group":"suru","base":{"text":"予約する","kana":"よやくする"},"masu":{"text":"予約します","kana":"よやくします"},"negative":{"text":"予約しない","kana":"よやくしない"}},{"id":288,"meaning":"확인하다","group":"suru","base":{"text":"確認する","kana":"かくにんする"},"masu":{"text":"確認します","kana":"かくにんします"},"negative":{"text":"確認しない","kana":"かくにんしない"}},{"id":289,"meaning":"준비하다","group":"suru","base":{"text":"準備する","kana":"じゅんびする"},"masu":{"text":"準備します","kana":"じゅんびします"},"negative":{"text":"準備しない","kana":"じゅんびしない"}},{"id":290,"meaning":"정돈하다","group":"suru","base":{"text":"整理する","kana":"せいりする"},"masu":{"text":"整理します","kana":"せいりします"},"negative":{"text":"整理しない","kana":"せいりしない"}},{"id":291,"meaning":"정리정돈하다","group":"suru","base":{"text":"整頓する","kana":"せいとんする"},"masu":{"text":"整頓します","kana":"せいとんします"},"negative":{"text":"整頓しない","kana":"せいとんしない"}},{"id":292,"meaning":"정돈하다","group":"suru","base":{"text":"片付けする","kana":"かたづけする"},"masu":{"text":"片付けします","kana":"かたづけします"},"negative":{"text":"片付けしない","kana":"かたづけしない"}},{"id":293,"meaning":"연습하다","group":"suru","base":{"text":"練習する","kana":"れんしゅうする"},"masu":{"text":"練習します","kana":"れんしゅうします"},"negative":{"text":"練習しない","kana":"れんしゅうしない"}},{"id":294,"meaning":"공부하다","group":"suru","base":{"text":"勉強する","kana":"べんきょうする"},"masu":{"text":"勉強します","kana":"べんきょうします"},"negative":{"text":"勉強しない","kana":"べんきょうしない"}},{"id":295,"meaning":"복습하다","group":"suru","base":{"text":"復習する","kana":"ふくしゅうする"},"masu":{"text":"復習します","kana":"ふくしゅうします"},"negative":{"text":"復習しない","kana":"ふくしゅうしない"}},{"id":296,"meaning":"예습하다","group":"suru","base":{"text":"予習する","kana":"よしゅうする"},"masu":{"text":"予習します","kana":"よしゅうします"},"negative":{"text":"予習しない","kana":"よしゅうしない"}},{"id":297,"meaning":"숙제하다","group":"suru","base":{"text":"宿題する","kana":"しゅくだいする"},"masu":{"text":"宿題します","kana":"しゅくだいします"},"negative":{"text":"宿題しない","kana":"しゅくだいしない"}},{"id":298,"meaning":"암기하다","group":"suru","base":{"text":"暗記する","kana":"あんきする"},"masu":{"text":"暗記します","kana":"あんきします"},"negative":{"text":"暗記しない","kana":"あんきしない"}},{"id":299,"meaning":"이해하다","group":"suru","base":{"text":"理解する","kana":"りかいする"},"masu":{"text":"理解します","kana":"りかいします"},"negative":{"text":"理解しない","kana":"りかいしない"}},{"id":300,"meaning":"기억하다","group":"suru","base":{"text":"記憶する","kana":"きおくする"},"masu":{"text":"記憶します","kana":"きおくします"},"negative":{"text":"記憶しない","kana":"きおくしない"}},{"id":301,"meaning":"기록하다","group":"suru","base":{"text":"記録する","kana":"きろくする"},"masu":{"text":"記録します","kana":"きろくします"},"negative":{"text":"記録しない","kana":"きろくしない"}},{"id":302,"meaning":"메모하다","group":"suru","base":{"text":"メモする","kana":"メモする"},"masu":{"text":"メモします","kana":"メモします"},"negative":{"text":"メモしない","kana":"メモしない"}},{"id":303,"meaning":"입력하다","group":"suru","base":{"text":"入力する","kana":"にゅうりょくする"},"masu":{"text":"入力します","kana":"にゅうりょくします"},"negative":{"text":"入力しない","kana":"にゅうりょくしない"}},{"id":304,"meaning":"인쇄하다","group":"suru","base":{"text":"印刷する","kana":"いんさつする"},"masu":{"text":"印刷します","kana":"いんさつします"},"negative":{"text":"印刷しない","kana":"いんさつしない"}},{"id":305,"meaning":"저장하다","group":"suru","base":{"text":"保存する","kana":"ほぞんする"},"masu":{"text":"保存します","kana":"ほぞんします"},"negative":{"text":"保存しない","kana":"ほぞんしない"}},{"id":306,"meaning":"송신하다","group":"suru","base":{"text":"送信する","kana":"そうしんする"},"masu":{"text":"送信します","kana":"そうしんします"},"negative":{"text":"送信しない","kana":"そうしんしない"}},{"id":307,"meaning":"수신하다","group":"suru","base":{"text":"受信する","kana":"じゅしんする"},"masu":{"text":"受信します","kana":"じゅしんします"},"negative":{"text":"受信しない","kana":"じゅしんしない"}},{"id":308,"meaning":"답장하다","group":"suru","base":{"text":"返信する","kana":"へんしんする"},"masu":{"text":"返信します","kana":"へんしんします"},"negative":{"text":"返信しない","kana":"へんしんしない"}},{"id":309,"meaning":"답장하다","group":"suru","base":{"text":"返事する","kana":"へんじする"},"masu":{"text":"返事します","kana":"へんじします"},"negative":{"text":"返事しない","kana":"へんじしない"}},{"id":310,"meaning":"인사하다","group":"suru","base":{"text":"挨拶する","kana":"あいさつする"},"masu":{"text":"挨拶します","kana":"あいさつします"},"negative":{"text":"挨拶しない","kana":"あいさつしない"}},{"id":311,"meaning":"발표하다","group":"suru","base":{"text":"発表する","kana":"はっぴょうする"},"masu":{"text":"発表します","kana":"はっぴょうします"},"negative":{"text":"発表しない","kana":"はっぴょうしない"}},{"id":312,"meaning":"보고하다","group":"suru","base":{"text":"報告する","kana":"ほうこくする"},"masu":{"text":"報告します","kana":"ほうこくします"},"negative":{"text":"報告しない","kana":"ほうこくしない"}},{"id":313,"meaning":"제출하다","group":"suru","base":{"text":"提出する","kana":"ていしゅつする"},"masu":{"text":"提出します","kana":"ていしゅつします"},"negative":{"text":"提出しない","kana":"ていしゅつしない"}},{"id":314,"meaning":"출석하다","group":"suru","base":{"text":"出席する","kana":"しゅっせきする"},"masu":{"text":"出席します","kana":"しゅっせきします"},"negative":{"text":"出席しない","kana":"しゅっせきしない"}},{"id":315,"meaning":"결석하다","group":"suru","base":{"text":"欠席する","kana":"けっせきする"},"masu":{"text":"欠席します","kana":"けっせきします"},"negative":{"text":"欠席しない","kana":"けっせきしない"}},{"id":316,"meaning":"지각하다","group":"suru","base":{"text":"遅刻する","kana":"ちこくする"},"masu":{"text":"遅刻します","kana":"ちこくします"},"negative":{"text":"遅刻しない","kana":"ちこくしない"}},{"id":317,"meaning":"조퇴하다","group":"suru","base":{"text":"早退する","kana":"そうたいする"},"masu":{"text":"早退します","kana":"そうたいします"},"negative":{"text":"早退しない","kana":"そうたいしない"}},{"id":318,"meaning":"참가하다","group":"suru","base":{"text":"参加する","kana":"さんかする"},"masu":{"text":"参加します","kana":"さんかします"},"negative":{"text":"参加しない","kana":"さんかしない"}},{"id":319,"meaning":"결근하다","group":"suru","base":{"text":"欠勤する","kana":"けっきんする"},"masu":{"text":"欠勤します","kana":"けっきんします"},"negative":{"text":"欠勤しない","kana":"けっきんしない"}},{"id":320,"meaning":"출근하다","group":"suru","base":{"text":"通勤する","kana":"つうきんする"},"masu":{"text":"通勤します","kana":"つうきんします"},"negative":{"text":"通勤しない","kana":"つうきんしない"}},{"id":321,"meaning":"통학하다","group":"suru","base":{"text":"通学する","kana":"つうがくする"},"masu":{"text":"通学します","kana":"つうがくします"},"negative":{"text":"通学しない","kana":"つうがくしない"}},{"id":322,"meaning":"출장하다","group":"suru","base":{"text":"出張する","kana":"しゅっちょうする"},"masu":{"text":"出張します","kana":"しゅっちょうします"},"negative":{"text":"出張しない","kana":"しゅっちょうしない"}},{"id":323,"meaning":"퇴근하다","group":"suru","base":{"text":"退勤する","kana":"たいきんする"},"masu":{"text":"退勤します","kana":"たいきんします"},"negative":{"text":"退勤しない","kana":"たいきんしない"}},{"id":324,"meaning":"잔업하다","group":"suru","base":{"text":"残業する","kana":"ざんぎょうする"},"masu":{"text":"残業します","kana":"ざんぎょうします"},"negative":{"text":"残業しない","kana":"ざんぎょうしない"}},{"id":325,"meaning":"근무하다","group":"suru","base":{"text":"勤務する","kana":"きんむする"},"masu":{"text":"勤務します","kana":"きんむします"},"negative":{"text":"勤務しない","kana":"きんむしない"}},{"id":326,"meaning":"취업하다","group":"suru","base":{"text":"就職する","kana":"しゅうしょくする"},"masu":{"text":"就職します","kana":"しゅうしょくします"},"negative":{"text":"就職しない","kana":"しゅうしょくしない"}},{"id":327,"meaning":"이직하다","group":"suru","base":{"text":"転職する","kana":"てんしょくする"},"masu":{"text":"転職します","kana":"てんしょくします"},"negative":{"text":"転職しない","kana":"てんしょくしない"}},{"id":328,"meaning":"퇴직하다","group":"suru","base":{"text":"退職する","kana":"たいしょくする"},"masu":{"text":"退職します","kana":"たいしょくします"},"negative":{"text":"退職しない","kana":"たいしょくしない"}},{"id":329,"meaning":"응모하다","group":"suru","base":{"text":"応募する","kana":"おうぼする"},"masu":{"text":"応募します","kana":"おうぼします"},"negative":{"text":"応募しない","kana":"おうぼしない"}},{"id":330,"meaning":"면접하다","group":"suru","base":{"text":"面接する","kana":"めんせつする"},"masu":{"text":"面接します","kana":"めんせつします"},"negative":{"text":"面接しない","kana":"めんせつしない"}},{"id":331,"meaning":"채용하다","group":"suru","base":{"text":"採用する","kana":"さいようする"},"masu":{"text":"採用します","kana":"さいようします"},"negative":{"text":"採用しない","kana":"さいようしない"}},{"id":332,"meaning":"계약하다","group":"suru","base":{"text":"契約する","kana":"けいやくする"},"masu":{"text":"契約します","kana":"けいやくします"},"negative":{"text":"契約しない","kana":"けいやくしない"}},{"id":333,"meaning":"등록하다","group":"suru","base":{"text":"登録する","kana":"とうろくする"},"masu":{"text":"登録します","kana":"とうろくします"},"negative":{"text":"登録しない","kana":"とうろくしない"}},{"id":334,"meaning":"신청하다","group":"suru","base":{"text":"申請する","kana":"しんせいする"},"masu":{"text":"申請します","kana":"しんせいします"},"negative":{"text":"申請しない","kana":"しんせいしない"}},{"id":335,"meaning":"갱신하다","group":"suru","base":{"text":"更新する","kana":"こうしんする"},"masu":{"text":"更新します","kana":"こうしんします"},"negative":{"text":"更新しない","kana":"こうしんしない"}},{"id":336,"meaning":"변경하다","group":"suru","base":{"text":"変更する","kana":"へんこうする"},"masu":{"text":"変更します","kana":"へんこうします"},"negative":{"text":"変更しない","kana":"へんこうしない"}},{"id":337,"meaning":"추가하다","group":"suru","base":{"text":"追加する","kana":"ついかする"},"masu":{"text":"追加します","kana":"ついかします"},"negative":{"text":"追加しない","kana":"ついかしない"}},{"id":338,"meaning":"삭제하다","group":"suru","base":{"text":"削除する","kana":"さくじょする"},"masu":{"text":"削除します","kana":"さくじょします"},"negative":{"text":"削除しない","kana":"さくじょしない"}},{"id":339,"meaning":"수정하다","group":"suru","base":{"text":"修正する","kana":"しゅうせいする"},"masu":{"text":"修正します","kana":"しゅうせいします"},"negative":{"text":"修正しない","kana":"しゅうせいしない"}},{"id":340,"meaning":"편집하다","group":"suru","base":{"text":"編集する","kana":"へんしゅうする"},"masu":{"text":"編集します","kana":"へんしゅうします"},"negative":{"text":"編集しない","kana":"へんしゅうしない"}},{"id":341,"meaning":"번역하다","group":"suru","base":{"text":"翻訳する","kana":"ほんやくする"},"masu":{"text":"翻訳します","kana":"ほんやくします"},"negative":{"text":"翻訳しない","kana":"ほんやくしない"}},{"id":342,"meaning":"통역하다","group":"suru","base":{"text":"通訳する","kana":"つうやくする"},"masu":{"text":"通訳します","kana":"つうやくします"},"negative":{"text":"通訳しない","kana":"つうやくしない"}},{"id":343,"meaning":"해석하다","group":"suru","base":{"text":"解釈する","kana":"かいしゃくする"},"masu":{"text":"解釈します","kana":"かいしゃくします"},"negative":{"text":"解釈しない","kana":"かいしゃくしない"}},{"id":344,"meaning":"분석하다","group":"suru","base":{"text":"分析する","kana":"ぶんせきする"},"masu":{"text":"分析します","kana":"ぶんせきします"},"negative":{"text":"分析しない","kana":"ぶんせきしない"}},{"id":345,"meaning":"연구하다","group":"suru","base":{"text":"研究する","kana":"けんきゅうする"},"masu":{"text":"研究します","kana":"けんきゅうします"},"negative":{"text":"研究しない","kana":"けんきゅうしない"}},{"id":346,"meaning":"조사하다","group":"suru","base":{"text":"調査する","kana":"ちょうさする"},"masu":{"text":"調査します","kana":"ちょうさします"},"negative":{"text":"調査しない","kana":"ちょうさしない"}},{"id":347,"meaning":"검사하다","group":"suru","base":{"text":"検査する","kana":"けんさする"},"masu":{"text":"検査します","kana":"けんさします"},"negative":{"text":"検査しない","kana":"けんさしない"}},{"id":348,"meaning":"시험하다","group":"suru","base":{"text":"試験する","kana":"しけんする"},"masu":{"text":"試験します","kana":"しけんします"},"negative":{"text":"試験しない","kana":"しけんしない"}},{"id":349,"meaning":"테스트하다","group":"suru","base":{"text":"テストする","kana":"テストする"},"masu":{"text":"テストします","kana":"テストします"},"negative":{"text":"テストしない","kana":"テストしない"}},{"id":350,"meaning":"실험하다","group":"suru","base":{"text":"実験する","kana":"じっけんする"},"masu":{"text":"実験します","kana":"じっけんします"},"negative":{"text":"実験しない","kana":"じっけんしない"}},{"id":351,"meaning":"관찰하다","group":"suru","base":{"text":"観察する","kana":"かんさつする"},"masu":{"text":"観察します","kana":"かんさつします"},"negative":{"text":"観察しない","kana":"かんさつしない"}},{"id":352,"meaning":"발견하다","group":"suru","base":{"text":"発見する","kana":"はっけんする"},"masu":{"text":"発見します","kana":"はっけんします"},"negative":{"text":"発見しない","kana":"はっけんしない"}},{"id":353,"meaning":"발명하다","group":"suru","base":{"text":"発明する","kana":"はつめいする"},"masu":{"text":"発明します","kana":"はつめいします"},"negative":{"text":"発明しない","kana":"はつめいしない"}},{"id":354,"meaning":"개발하다","group":"suru","base":{"text":"開発する","kana":"かいはつする"},"masu":{"text":"開発します","kana":"かいはつします"},"negative":{"text":"開発しない","kana":"かいはつしない"}},{"id":355,"meaning":"설계하다","group":"suru","base":{"text":"設計する","kana":"せっけいする"},"masu":{"text":"設計します","kana":"せっけいします"},"negative":{"text":"設計しない","kana":"せっけいしない"}},{"id":356,"meaning":"제작하다","group":"suru","base":{"text":"制作する","kana":"せいさくする"},"masu":{"text":"制作します","kana":"せいさくします"},"negative":{"text":"制作しない","kana":"せいさくしない"}},{"id":357,"meaning":"작성하다","group":"suru","base":{"text":"作成する","kana":"さくせいする"},"masu":{"text":"作成します","kana":"さくせいします"},"negative":{"text":"作成しない","kana":"さくせいしない"}},{"id":358,"meaning":"작업하다","group":"suru","base":{"text":"作業する","kana":"さぎょうする"},"masu":{"text":"作業します","kana":"さぎょうします"},"negative":{"text":"作業しない","kana":"さぎょうしない"}},{"id":359,"meaning":"가공하다","group":"suru","base":{"text":"加工する","kana":"かこうする"},"masu":{"text":"加工します","kana":"かこうします"},"negative":{"text":"加工しない","kana":"かこうしない"}},{"id":360,"meaning":"제조하다","group":"suru","base":{"text":"製造する","kana":"せいぞうする"},"masu":{"text":"製造します","kana":"せいぞうします"},"negative":{"text":"製造しない","kana":"せいぞうしない"}},{"id":361,"meaning":"생산하다","group":"suru","base":{"text":"生産する","kana":"せいさんする"},"masu":{"text":"生産します","kana":"せいさんします"},"negative":{"text":"生産しない","kana":"せいさんしない"}},{"id":362,"meaning":"관리하다","group":"suru","base":{"text":"管理する","kana":"かんりする"},"masu":{"text":"管理します","kana":"かんりします"},"negative":{"text":"管理しない","kana":"かんりしない"}},{"id":363,"meaning":"운영하다","group":"suru","base":{"text":"運営する","kana":"うんえいする"},"masu":{"text":"運営します","kana":"うんえいします"},"negative":{"text":"運営しない","kana":"うんえいしない"}},{"id":364,"meaning":"영업하다","group":"suru","base":{"text":"営業する","kana":"えいぎょうする"},"masu":{"text":"営業します","kana":"えいぎょうします"},"negative":{"text":"営業しない","kana":"えいぎょうしない"}},{"id":365,"meaning":"판매하다","group":"suru","base":{"text":"販売する","kana":"はんばいする"},"masu":{"text":"販売します","kana":"はんばいします"},"negative":{"text":"販売しない","kana":"はんばいしない"}},{"id":366,"meaning":"구매하다","group":"suru","base":{"text":"購入する","kana":"こうにゅうする"},"masu":{"text":"購入します","kana":"こうにゅうします"},"negative":{"text":"購入しない","kana":"こうにゅうしない"}},{"id":367,"meaning":"반품하다","group":"suru","base":{"text":"返品する","kana":"へんぴんする"},"masu":{"text":"返品します","kana":"へんぴんします"},"negative":{"text":"返品しない","kana":"へんぴんしない"}},{"id":368,"meaning":"교환하다","group":"suru","base":{"text":"交換する","kana":"こうかんする"},"masu":{"text":"交換します","kana":"こうかんします"},"negative":{"text":"交換しない","kana":"こうかんしない"}},{"id":369,"meaning":"가격을 내리다","group":"suru","base":{"text":"値下げする","kana":"ねさげする"},"masu":{"text":"値下げします","kana":"ねさげします"},"negative":{"text":"値下げしない","kana":"ねさげしない"}},{"id":370,"meaning":"가격을 올리다","group":"suru","base":{"text":"値上げする","kana":"ねあげする"},"masu":{"text":"値上げします","kana":"ねあげします"},"negative":{"text":"値上げしない","kana":"ねあげしない"}},{"id":371,"meaning":"계산하다","group":"suru","base":{"text":"計算する","kana":"けいさんする"},"masu":{"text":"計算します","kana":"けいさんします"},"negative":{"text":"計算しない","kana":"けいさんしない"}},{"id":372,"meaning":"절약하다","group":"suru","base":{"text":"節約する","kana":"せつやくする"},"masu":{"text":"節約します","kana":"せつやくします"},"negative":{"text":"節約しない","kana":"せつやくしない"}},{"id":373,"meaning":"저금하다","group":"suru","base":{"text":"貯金する","kana":"ちょきんする"},"masu":{"text":"貯金します","kana":"ちょきんします"},"negative":{"text":"貯金しない","kana":"ちょきんしない"}},{"id":374,"meaning":"투자하다","group":"suru","base":{"text":"投資する","kana":"とうしする"},"masu":{"text":"投資します","kana":"とうしします"},"negative":{"text":"投資しない","kana":"とうししない"}},{"id":375,"meaning":"절세하다","group":"suru","base":{"text":"節税する","kana":"せつぜいする"},"masu":{"text":"節税します","kana":"せつぜいします"},"negative":{"text":"節税しない","kana":"せつぜいしない"}},{"id":376,"meaning":"송금하다","group":"suru","base":{"text":"送金する","kana":"そうきんする"},"masu":{"text":"送金します","kana":"そうきんします"},"negative":{"text":"送金しない","kana":"そうきんしない"}},{"id":377,"meaning":"입금하다","group":"suru","base":{"text":"入金する","kana":"にゅうきんする"},"masu":{"text":"入金します","kana":"にゅうきんします"},"negative":{"text":"入金しない","kana":"にゅうきんしない"}},{"id":378,"meaning":"출금하다","group":"suru","base":{"text":"出金する","kana":"しゅっきんする"},"masu":{"text":"出金します","kana":"しゅっきんします"},"negative":{"text":"出金しない","kana":"しゅっきんしない"}},{"id":379,"meaning":"정산하다","group":"suru","base":{"text":"精算する","kana":"せいさんする"},"masu":{"text":"精算します","kana":"せいさんします"},"negative":{"text":"精算しない","kana":"せいさんしない"}},{"id":380,"meaning":"청구하다","group":"suru","base":{"text":"請求する","kana":"せいきゅうする"},"masu":{"text":"請求します","kana":"せいきゅうします"},"negative":{"text":"請求しない","kana":"せいきゅうしない"}},{"id":381,"meaning":"지급하다","group":"suru","base":{"text":"支給する","kana":"しきゅうする"},"masu":{"text":"支給します","kana":"しきゅうします"},"negative":{"text":"支給しない","kana":"しきゅうしない"}},{"id":382,"meaning":"이용하다","group":"suru","base":{"text":"利用する","kana":"りようする"},"masu":{"text":"利用します","kana":"りようします"},"negative":{"text":"利用しない","kana":"りようしない"}},{"id":383,"meaning":"사용하다","group":"suru","base":{"text":"使用する","kana":"しようする"},"masu":{"text":"使用します","kana":"しようします"},"negative":{"text":"使用しない","kana":"しようしない"}},{"id":384,"meaning":"활용하다","group":"suru","base":{"text":"活用する","kana":"かつようする"},"masu":{"text":"活用します","kana":"かつようします"},"negative":{"text":"活用しない","kana":"かつようしない"}},{"id":385,"meaning":"응용하다","group":"suru","base":{"text":"応用する","kana":"おうようする"},"masu":{"text":"応用します","kana":"おうようします"},"negative":{"text":"応用しない","kana":"おうようしない"}},{"id":386,"meaning":"궁리하다","group":"suru","base":{"text":"工夫する","kana":"くふうする"},"masu":{"text":"工夫します","kana":"くふうします"},"negative":{"text":"工夫しない","kana":"くふうしない"}},{"id":387,"meaning":"개선하다","group":"suru","base":{"text":"改善する","kana":"かいぜんする"},"masu":{"text":"改善します","kana":"かいぜんします"},"negative":{"text":"改善しない","kana":"かいぜんしない"}},{"id":388,"meaning":"해결하다","group":"suru","base":{"text":"解決する","kana":"かいけつする"},"masu":{"text":"解決します","kana":"かいけつします"},"negative":{"text":"解決しない","kana":"かいけつしない"}},{"id":389,"meaning":"판단하다","group":"suru","base":{"text":"判断する","kana":"はんだんする"},"masu":{"text":"判断します","kana":"はんだんします"},"negative":{"text":"判断しない","kana":"はんだんしない"}},{"id":390,"meaning":"결정하다","group":"suru","base":{"text":"決定する","kana":"けっていする"},"masu":{"text":"決定します","kana":"けっていします"},"negative":{"text":"決定しない","kana":"けっていしない"}},{"id":391,"meaning":"선택하다","group":"suru","base":{"text":"選択する","kana":"せんたくする"},"masu":{"text":"選択します","kana":"せんたくします"},"negative":{"text":"選択しない","kana":"せんたくしない"}},{"id":392,"meaning":"비교하다","group":"suru","base":{"text":"比較する","kana":"ひかくする"},"masu":{"text":"比較します","kana":"ひかくします"},"negative":{"text":"比較しない","kana":"ひかくしない"}},{"id":393,"meaning":"평가하다","group":"suru","base":{"text":"評価する","kana":"ひょうかする"},"masu":{"text":"評価します","kana":"ひょうかします"},"negative":{"text":"評価しない","kana":"ひょうかしない"}},{"id":394,"meaning":"다시 확인하다","group":"godan","base":{"text":"確認し直す","kana":"かくにんしなおす"},"masu":{"text":"確認し直します","kana":"かくにんしなおします"},"negative":{"text":"確認し直さない","kana":"かくにんしなおさない"}},{"id":395,"meaning":"검토하다","group":"suru","base":{"text":"検討する","kana":"けんとうする"},"masu":{"text":"検討します","kana":"けんとうします"},"negative":{"text":"検討しない","kana":"けんとうしない"}},{"id":396,"meaning":"제안하다","group":"suru","base":{"text":"提案する","kana":"ていあんする"},"masu":{"text":"提案します","kana":"ていあんします"},"negative":{"text":"提案しない","kana":"ていあんしない"}},{"id":397,"meaning":"기획하다","group":"suru","base":{"text":"企画する","kana":"きかくする"},"masu":{"text":"企画します","kana":"きかくします"},"negative":{"text":"企画しない","kana":"きかくしない"}},{"id":398,"meaning":"계획하다","group":"suru","base":{"text":"計画する","kana":"けいかくする"},"masu":{"text":"計画します","kana":"けいかくします"},"negative":{"text":"計画しない","kana":"けいかくしない"}},{"id":399,"meaning":"예측하다","group":"suru","base":{"text":"予測する","kana":"よそくする"},"masu":{"text":"予測します","kana":"よそくします"},"negative":{"text":"予測しない","kana":"よそくしない"}},{"id":400,"meaning":"예상하다","group":"suru","base":{"text":"予想する","kana":"よそうする"},"masu":{"text":"予想します","kana":"よそうします"},"negative":{"text":"予想しない","kana":"よそうしない"}},{"id":401,"meaning":"기대하다","group":"suru","base":{"text":"期待する","kana":"きたいする"},"masu":{"text":"期待します","kana":"きたいします"},"negative":{"text":"期待しない","kana":"きたいしない"}},{"id":402,"meaning":"상상하다","group":"suru","base":{"text":"想像する","kana":"そうぞうする"},"masu":{"text":"想像します","kana":"そうぞうします"},"negative":{"text":"想像しない","kana":"そうぞうしない"}},{"id":403,"meaning":"감사하다","group":"suru","base":{"text":"感謝する","kana":"かんしゃする"},"masu":{"text":"感謝します","kana":"かんしゃします"},"negative":{"text":"感謝しない","kana":"かんしゃしない"}},{"id":404,"meaning":"감동하다","group":"suru","base":{"text":"感動する","kana":"かんどうする"},"masu":{"text":"感動します","kana":"かんどうします"},"negative":{"text":"感動しない","kana":"かんどうしない"}},{"id":405,"meaning":"감탄하다","group":"suru","base":{"text":"感心する","kana":"かんしんする"},"masu":{"text":"感心します","kana":"かんしんします"},"negative":{"text":"感心しない","kana":"かんしんしない"}},{"id":406,"meaning":"걱정하다","group":"suru","base":{"text":"心配する","kana":"しんぱいする"},"masu":{"text":"心配します","kana":"しんぱいします"},"negative":{"text":"心配しない","kana":"しんぱいしない"}},{"id":407,"meaning":"안심하다","group":"suru","base":{"text":"安心する","kana":"あんしんする"},"masu":{"text":"安心します","kana":"あんしんします"},"negative":{"text":"安心しない","kana":"あんしんしない"}},{"id":408,"meaning":"긴장하다","group":"suru","base":{"text":"緊張する","kana":"きんちょうする"},"masu":{"text":"緊張します","kana":"きんちょうします"},"negative":{"text":"緊張しない","kana":"きんちょうしない"}},{"id":409,"meaning":"흥분하다","group":"suru","base":{"text":"興奮する","kana":"こうふんする"},"masu":{"text":"興奮します","kana":"こうふんします"},"negative":{"text":"興奮しない","kana":"こうふんしない"}},{"id":410,"meaning":"집중하다","group":"suru","base":{"text":"集中する","kana":"しゅうちゅうする"},"masu":{"text":"集中します","kana":"しゅうちゅうします"},"negative":{"text":"集中しない","kana":"しゅうちゅうしない"}},{"id":411,"meaning":"노력하다","group":"suru","base":{"text":"努力する","kana":"どりょくする"},"masu":{"text":"努力します","kana":"どりょくします"},"negative":{"text":"努力しない","kana":"どりょくしない"}},{"id":412,"meaning":"참다","group":"suru","base":{"text":"我慢する","kana":"がまんする"},"masu":{"text":"我慢します","kana":"がまんします"},"negative":{"text":"我慢しない","kana":"がまんしない"}},{"id":413,"meaning":"반성하다","group":"suru","base":{"text":"反省する","kana":"はんせいする"},"masu":{"text":"反省します","kana":"はんせいします"},"negative":{"text":"反省しない","kana":"はんせいしない"}},{"id":414,"meaning":"후회하다","group":"suru","base":{"text":"後悔する","kana":"こうかいする"},"masu":{"text":"後悔します","kana":"こうかいします"},"negative":{"text":"後悔しない","kana":"こうかいしない"}},{"id":415,"meaning":"만족하다","group":"suru","base":{"text":"満足する","kana":"まんぞくする"},"masu":{"text":"満足します","kana":"まんぞくします"},"negative":{"text":"満足しない","kana":"まんぞくしない"}},{"id":416,"meaning":"납득하다","group":"suru","base":{"text":"納得する","kana":"なっとくする"},"masu":{"text":"納得します","kana":"なっとくします"},"negative":{"text":"納得しない","kana":"なっとくしない"}},{"id":417,"meaning":"존경하다","group":"suru","base":{"text":"尊敬する","kana":"そんけいする"},"masu":{"text":"尊敬します","kana":"そんけいします"},"negative":{"text":"尊敬しない","kana":"そんけいしない"}},{"id":418,"meaning":"신뢰하다","group":"suru","base":{"text":"信頼する","kana":"しんらいする"},"masu":{"text":"信頼します","kana":"しんらいします"},"negative":{"text":"信頼しない","kana":"しんらいしない"}},{"id":419,"meaning":"응원하다","group":"suru","base":{"text":"応援する","kana":"おうえんする"},"masu":{"text":"応援します","kana":"おうえんします"},"negative":{"text":"応援しない","kana":"おうえんしない"}},{"id":420,"meaning":"협력하다","group":"suru","base":{"text":"協力する","kana":"きょうりょくする"},"masu":{"text":"協力します","kana":"きょうりょくします"},"negative":{"text":"協力しない","kana":"きょうりょくしない"}},{"id":421,"meaning":"공유하다","group":"suru","base":{"text":"共有する","kana":"きょうゆうする"},"masu":{"text":"共有します","kana":"きょうゆうします"},"negative":{"text":"共有しない","kana":"きょうゆうしない"}},{"id":422,"meaning":"교류하다","group":"suru","base":{"text":"交流する","kana":"こうりゅうする"},"masu":{"text":"交流します","kana":"こうりゅうします"},"negative":{"text":"交流しない","kana":"こうりゅうしない"}},{"id":423,"meaning":"연계하다","group":"suru","base":{"text":"連携する","kana":"れんけいする"},"masu":{"text":"連携します","kana":"れんけいします"},"negative":{"text":"連携しない","kana":"れんけいしない"}},{"id":424,"meaning":"대화하다","group":"suru","base":{"text":"対話する","kana":"たいわする"},"masu":{"text":"対話します","kana":"たいわします"},"negative":{"text":"対話しない","kana":"たいわしない"}},{"id":425,"meaning":"회화하다","group":"suru","base":{"text":"会話する","kana":"かいわする"},"masu":{"text":"会話します","kana":"かいわします"},"negative":{"text":"会話しない","kana":"かいわしない"}},{"id":426,"meaning":"논의하다","group":"suru","base":{"text":"議論する","kana":"ぎろんする"},"masu":{"text":"議論します","kana":"ぎろんします"},"negative":{"text":"議論しない","kana":"ぎろんしない"}},{"id":427,"meaning":"서로 의논하다","group":"godan","base":{"text":"相談し合う","kana":"そうだんしあう"},"masu":{"text":"相談し合います","kana":"そうだんしあいます"},"negative":{"text":"相談し合わない","kana":"そうだんしあわない"}},{"id":428,"meaning":"교섭하다","group":"suru","base":{"text":"交渉する","kana":"こうしょうする"},"masu":{"text":"交渉します","kana":"こうしょうします"},"negative":{"text":"交渉しない","kana":"こうしょうしない"}},{"id":429,"meaning":"설득하다","group":"suru","base":{"text":"説得する","kana":"せっとくする"},"masu":{"text":"説得します","kana":"せっとくします"},"negative":{"text":"説得しない","kana":"せっとくしない"}},{"id":430,"meaning":"주의하다","group":"suru","base":{"text":"注意する","kana":"ちゅういする"},"masu":{"text":"注意します","kana":"ちゅういします"},"negative":{"text":"注意しない","kana":"ちゅういしない"}},{"id":431,"meaning":"경고하다","group":"suru","base":{"text":"警告する","kana":"けいこくする"},"masu":{"text":"警告します","kana":"けいこくします"},"negative":{"text":"警告しない","kana":"けいこくしない"}},{"id":432,"meaning":"금지하다","group":"suru","base":{"text":"禁止する","kana":"きんしする"},"masu":{"text":"禁止します","kana":"きんしします"},"negative":{"text":"禁止しない","kana":"きんししない"}},{"id":433,"meaning":"허가하다","group":"suru","base":{"text":"許可する","kana":"きょかする"},"masu":{"text":"許可します","kana":"きょかします"},"negative":{"text":"許可しない","kana":"きょかしない"}},{"id":434,"meaning":"승인하다","group":"suru","base":{"text":"承認する","kana":"しょうにんする"},"masu":{"text":"承認します","kana":"しょうにんします"},"negative":{"text":"承認しない","kana":"しょうにんしない"}},{"id":435,"meaning":"거부하다","group":"suru","base":{"text":"拒否する","kana":"きょひする"},"masu":{"text":"拒否します","kana":"きょひします"},"negative":{"text":"拒否しない","kana":"きょひしない"}},{"id":436,"meaning":"환영하다","group":"suru","base":{"text":"歓迎する","kana":"かんげいする"},"masu":{"text":"歓迎します","kana":"かんげいします"},"negative":{"text":"歓迎しない","kana":"かんげいしない"}},{"id":437,"meaning":"초대하다","group":"suru","base":{"text":"招待する","kana":"しょうたいする"},"masu":{"text":"招待します","kana":"しょうたいします"},"negative":{"text":"招待しない","kana":"しょうたいしない"}},{"id":438,"meaning":"방문하다","group":"suru","base":{"text":"訪問する","kana":"ほうもんする"},"masu":{"text":"訪問します","kana":"ほうもんします"},"negative":{"text":"訪問しない","kana":"ほうもんしない"}},{"id":439,"meaning":"체류하다","group":"suru","base":{"text":"滞在する","kana":"たいざいする"},"masu":{"text":"滞在します","kana":"たいざいします"},"negative":{"text":"滞在しない","kana":"たいざいしない"}},{"id":440,"meaning":"숙박하다","group":"suru","base":{"text":"宿泊する","kana":"しゅくはくする"},"masu":{"text":"宿泊します","kana":"しゅくはくします"},"negative":{"text":"宿泊しない","kana":"しゅくはくしない"}},{"id":441,"meaning":"관광하다","group":"suru","base":{"text":"観光する","kana":"かんこうする"},"masu":{"text":"観光します","kana":"かんこうします"},"negative":{"text":"観光しない","kana":"かんこうしない"}},{"id":442,"meaning":"여행하다","group":"suru","base":{"text":"旅行する","kana":"りょこうする"},"masu":{"text":"旅行します","kana":"りょこうします"},"negative":{"text":"旅行しない","kana":"りょこうしない"}},{"id":443,"meaning":"출발하다","group":"suru","base":{"text":"出発する","kana":"しゅっぱつする"},"masu":{"text":"出発します","kana":"しゅっぱつします"},"negative":{"text":"出発しない","kana":"しゅっぱつしない"}},{"id":444,"meaning":"도착하다","group":"suru","base":{"text":"到着する","kana":"とうちゃくする"},"masu":{"text":"到着します","kana":"とうちゃくします"},"negative":{"text":"到着しない","kana":"とうちゃくしない"}},{"id":445,"meaning":"이동하다","group":"suru","base":{"text":"移動する","kana":"いどうする"},"masu":{"text":"移動します","kana":"いどうします"},"negative":{"text":"移動しない","kana":"いどうしない"}},{"id":446,"meaning":"운전하다","group":"suru","base":{"text":"運転する","kana":"うんてんする"},"masu":{"text":"運転します","kana":"うんてんします"},"negative":{"text":"運転しない","kana":"うんてんしない"}},{"id":447,"meaning":"주차하다","group":"suru","base":{"text":"駐車する","kana":"ちゅうしゃする"},"masu":{"text":"駐車します","kana":"ちゅうしゃします"},"negative":{"text":"駐車しない","kana":"ちゅうしゃしない"}},{"id":448,"meaning":"정차하다","group":"suru","base":{"text":"停車する","kana":"ていしゃする"},"masu":{"text":"停車します","kana":"ていしゃします"},"negative":{"text":"停車しない","kana":"ていしゃしない"}},{"id":449,"meaning":"승차하다","group":"suru","base":{"text":"乗車する","kana":"じょうしゃする"},"masu":{"text":"乗車します","kana":"じょうしゃします"},"negative":{"text":"乗車しない","kana":"じょうしゃしない"}},{"id":450,"meaning":"하차하다","group":"suru","base":{"text":"下車する","kana":"げしゃする"},"masu":{"text":"下車します","kana":"げしゃします"},"negative":{"text":"下車しない","kana":"げしゃしない"}},{"id":451,"meaning":"지연되다","group":"suru","base":{"text":"遅延する","kana":"ちえんする"},"masu":{"text":"遅延します","kana":"ちえんします"},"negative":{"text":"遅延しない","kana":"ちえんしない"}},{"id":452,"meaning":"예약 변경하다","group":"suru","base":{"text":"予約変更する","kana":"よやくへんこうする"},"masu":{"text":"予約変更します","kana":"よやくへんこうします"},"negative":{"text":"予約変更しない","kana":"よやくへんこうしない"}},{"id":453,"meaning":"예약을 확인하다","group":"suru","base":{"text":"確認予約する","kana":"かくにんよやくする"},"masu":{"text":"確認予約します","kana":"かくにんよやくします"},"negative":{"text":"確認予約しない","kana":"かくにんよやくしない"}},{"id":454,"meaning":"산책하다","group":"suru","base":{"text":"散策する","kana":"さんさくする"},"masu":{"text":"散策します","kana":"さんさくします"},"negative":{"text":"散策しない","kana":"さんさくしない"}},{"id":455,"meaning":"등산하다","group":"suru","base":{"text":"登山する","kana":"とざんする"},"masu":{"text":"登山します","kana":"とざんします"},"negative":{"text":"登山しない","kana":"とざんしない"}},{"id":456,"meaning":"수영하다","group":"suru","base":{"text":"水泳する","kana":"すいえいする"},"masu":{"text":"水泳します","kana":"すいえいします"},"negative":{"text":"水泳しない","kana":"すいえいしない"}},{"id":457,"meaning":"연습경기하다","group":"suru","base":{"text":"練習試合する","kana":"れんしゅうじあいする"},"masu":{"text":"練習試合します","kana":"れんしゅうじあいします"},"negative":{"text":"練習試合しない","kana":"れんしゅうじあいしない"}},{"id":458,"meaning":"시합하다","group":"suru","base":{"text":"試合する","kana":"しあいする"},"masu":{"text":"試合します","kana":"しあいします"},"negative":{"text":"試合しない","kana":"しあいしない"}},{"id":459,"meaning":"경쟁하다","group":"suru","base":{"text":"競争する","kana":"きょうそうする"},"masu":{"text":"競争します","kana":"きょうそうします"},"negative":{"text":"競争しない","kana":"きょうそうしない"}},{"id":460,"meaning":"우승하다","group":"suru","base":{"text":"優勝する","kana":"ゆうしょうする"},"masu":{"text":"優勝します","kana":"ゆうしょうします"},"negative":{"text":"優勝しない","kana":"ゆうしょうしない"}},{"id":461,"meaning":"승리하다","group":"suru","base":{"text":"勝利する","kana":"しょうりする"},"masu":{"text":"勝利します","kana":"しょうりします"},"negative":{"text":"勝利しない","kana":"しょうりしない"}},{"id":462,"meaning":"패배하다","group":"suru","base":{"text":"敗北する","kana":"はいぼくする"},"masu":{"text":"敗北します","kana":"はいぼくします"},"negative":{"text":"敗北しない","kana":"はいぼくしない"}},{"id":463,"meaning":"응원에 참가하다","group":"suru","base":{"text":"応援参加する","kana":"おうえんさんかする"},"masu":{"text":"応援参加します","kana":"おうえんさんかします"},"negative":{"text":"応援参加しない","kana":"おうえんさんかしない"}},{"id":464,"meaning":"독서하다","group":"suru","base":{"text":"読書する","kana":"どくしょする"},"masu":{"text":"読書します","kana":"どくしょします"},"negative":{"text":"読書しない","kana":"どくしょしない"}},{"id":465,"meaning":"감상하다","group":"suru","base":{"text":"鑑賞する","kana":"かんしょうする"},"masu":{"text":"鑑賞します","kana":"かんしょうします"},"negative":{"text":"鑑賞しない","kana":"かんしょうしない"}},{"id":466,"meaning":"시청하다","group":"suru","base":{"text":"視聴する","kana":"しちょうする"},"masu":{"text":"視聴します","kana":"しちょうします"},"negative":{"text":"視聴しない","kana":"しちょうしない"}},{"id":467,"meaning":"녹화하다","group":"suru","base":{"text":"録画する","kana":"ろくがする"},"masu":{"text":"録画します","kana":"ろくがします"},"negative":{"text":"録画しない","kana":"ろくがしない"}},{"id":468,"meaning":"녹음하다","group":"suru","base":{"text":"録音する","kana":"ろくおんする"},"masu":{"text":"録音します","kana":"ろくおんします"},"negative":{"text":"録音しない","kana":"ろくおんしない"}},{"id":469,"meaning":"촬영하다","group":"suru","base":{"text":"撮影する","kana":"さつえいする"},"masu":{"text":"撮影します","kana":"さつえいします"},"negative":{"text":"撮影しない","kana":"さつえいしない"}},{"id":470,"meaning":"편집 작업하다","group":"suru","base":{"text":"編集作業する","kana":"へんしゅうさぎょうする"},"masu":{"text":"編集作業します","kana":"へんしゅうさぎょうします"},"negative":{"text":"編集作業しない","kana":"へんしゅうさぎょうしない"}},{"id":471,"meaning":"게시하다","group":"suru","base":{"text":"投稿する","kana":"とうこうする"},"masu":{"text":"投稿します","kana":"とうこうします"},"negative":{"text":"投稿しない","kana":"とうこうしない"}},{"id":472,"meaning":"방송·배포하다","group":"suru","base":{"text":"配信する","kana":"はいしんする"},"masu":{"text":"配信します","kana":"はいしんします"},"negative":{"text":"配信しない","kana":"はいしんしない"}},{"id":473,"meaning":"공유 게시하다","group":"suru","base":{"text":"共有投稿する","kana":"きょうゆうとうこうする"},"masu":{"text":"共有投稿します","kana":"きょうゆうとうこうします"},"negative":{"text":"共有投稿しない","kana":"きょうゆうとうこうしない"}},{"id":474,"meaning":"검색하다","group":"suru","base":{"text":"検索する","kana":"けんさくする"},"masu":{"text":"検索します","kana":"けんさくします"},"negative":{"text":"検索しない","kana":"けんさくしない"}},{"id":475,"meaning":"열람하다","group":"suru","base":{"text":"閲覧する","kana":"えつらんする"},"masu":{"text":"閲覧します","kana":"えつらんします"},"negative":{"text":"閲覧しない","kana":"えつらんしない"}},{"id":476,"meaning":"클릭하다","group":"suru","base":{"text":"クリックする","kana":"クリックする"},"masu":{"text":"クリックします","kana":"クリックします"},"negative":{"text":"クリックしない","kana":"クリックしない"}},{"id":477,"meaning":"탭하다","group":"suru","base":{"text":"タップする","kana":"タップする"},"masu":{"text":"タップします","kana":"タップします"},"negative":{"text":"タップしない","kana":"タップしない"}},{"id":478,"meaning":"복사하다","group":"suru","base":{"text":"コピーする","kana":"コピーする"},"masu":{"text":"コピーします","kana":"コピーします"},"negative":{"text":"コピーしない","kana":"コピーしない"}},{"id":479,"meaning":"붙여넣기하다","group":"suru","base":{"text":"ペーストする","kana":"ペーストする"},"masu":{"text":"ペーストします","kana":"ペーストします"},"negative":{"text":"ペーストしない","kana":"ペーストしない"}},{"id":480,"meaning":"다운로드하다","group":"suru","base":{"text":"ダウンロードする","kana":"ダウンロードする"},"masu":{"text":"ダウンロードします","kana":"ダウンロードします"},"negative":{"text":"ダウンロードしない","kana":"ダウンロードしない"}},{"id":481,"meaning":"업로드하다","group":"suru","base":{"text":"アップロードする","kana":"アップロードする"},"masu":{"text":"アップロードします","kana":"アップロードします"},"negative":{"text":"アップロードしない","kana":"アップロードしない"}},{"id":482,"meaning":"설치하다","group":"suru","base":{"text":"インストールする","kana":"インストールする"},"masu":{"text":"インストールします","kana":"インストールします"},"negative":{"text":"インストールしない","kana":"インストールしない"}},{"id":483,"meaning":"제거하다","group":"suru","base":{"text":"アンインストールする","kana":"アンインストールする"},"masu":{"text":"アンインストールします","kana":"アンインストールします"},"negative":{"text":"アンインストールしない","kana":"アンインストールしない"}},{"id":484,"meaning":"로그인하다","group":"suru","base":{"text":"ログインする","kana":"ログインする"},"masu":{"text":"ログインします","kana":"ログインします"},"negative":{"text":"ログインしない","kana":"ログインしない"}},{"id":485,"meaning":"로그아웃하다","group":"suru","base":{"text":"ログアウトする","kana":"ログアウトする"},"masu":{"text":"ログアウトします","kana":"ログアウトします"},"negative":{"text":"ログアウトしない","kana":"ログアウトしない"}},{"id":486,"meaning":"등록 해제하다","group":"suru","base":{"text":"登録解除する","kana":"とうろくかいじょする"},"masu":{"text":"登録解除します","kana":"とうろくかいじょします"},"negative":{"text":"登録解除しない","kana":"とうろくかいじょしない"}},{"id":487,"meaning":"설정하다","group":"suru","base":{"text":"設定する","kana":"せっていする"},"masu":{"text":"設定します","kana":"せっていします"},"negative":{"text":"設定しない","kana":"せっていしない"}},{"id":488,"meaning":"접속하다","group":"suru","base":{"text":"接続する","kana":"せつぞくする"},"masu":{"text":"接続します","kana":"せつぞくします"},"negative":{"text":"接続しない","kana":"せつぞくしない"}},{"id":489,"meaning":"차단·절단하다","group":"suru","base":{"text":"切断する","kana":"せつだんする"},"masu":{"text":"切断します","kana":"せつだんします"},"negative":{"text":"切断しない","kana":"せつだんしない"}},{"id":490,"meaning":"재시작하다","group":"suru","base":{"text":"再起動する","kana":"さいきどうする"},"masu":{"text":"再起動します","kana":"さいきどうします"},"negative":{"text":"再起動しない","kana":"さいきどうしない"}},{"id":491,"meaning":"실행하다","group":"suru","base":{"text":"起動する","kana":"きどうする"},"masu":{"text":"起動します","kana":"きどうします"},"negative":{"text":"起動しない","kana":"きどうしない"}},{"id":492,"meaning":"종료하다","group":"suru","base":{"text":"終了する","kana":"しゅうりょうする"},"masu":{"text":"終了します","kana":"しゅうりょうします"},"negative":{"text":"終了しない","kana":"しゅうりょうしない"}},{"id":493,"meaning":"개시하다","group":"suru","base":{"text":"開始する","kana":"かいしする"},"masu":{"text":"開始します","kana":"かいしします"},"negative":{"text":"開始しない","kana":"かいししない"}},{"id":494,"meaning":"재개하다","group":"suru","base":{"text":"再開する","kana":"さいかいする"},"masu":{"text":"再開します","kana":"さいかいします"},"negative":{"text":"再開しない","kana":"さいかいしない"}},{"id":495,"meaning":"정지하다","group":"suru","base":{"text":"停止する","kana":"ていしする"},"masu":{"text":"停止します","kana":"ていしします"},"negative":{"text":"停止しない","kana":"ていししない"}},{"id":496,"meaning":"중지하다","group":"suru","base":{"text":"中止する","kana":"ちゅうしする"},"masu":{"text":"中止します","kana":"ちゅうしします"},"negative":{"text":"中止しない","kana":"ちゅうししない"}},{"id":497,"meaning":"완료하다","group":"suru","base":{"text":"完了する","kana":"かんりょうする"},"masu":{"text":"完了します","kana":"かんりょうします"},"negative":{"text":"完了しない","kana":"かんりょうしない"}},{"id":498,"meaning":"완성하다","group":"suru","base":{"text":"完成する","kana":"かんせいする"},"masu":{"text":"完成します","kana":"かんせいします"},"negative":{"text":"完成しない","kana":"かんせいしない"}},{"id":499,"meaning":"실패하다","group":"suru","base":{"text":"失敗する","kana":"しっぱいする"},"masu":{"text":"失敗します","kana":"しっぱいします"},"negative":{"text":"失敗しない","kana":"しっぱいしない"}},{"id":500,"meaning":"성공하다","group":"suru","base":{"text":"成功する","kana":"せいこうする"},"masu":{"text":"成功します","kana":"せいこうします"},"negative":{"text":"成功しない","kana":"せいこうしない"}}];
+    const formLabels = {
+      base: "기본형",
+      masu: "ます형",
+      negative: "부정형"
+    };
+
+    const state = {
+      query: "",
+      voice: null
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+
+    function normalize(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/[\s　・·.]/g, "")
+        .trim();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function highlight(value, query) {
+      const safe = escapeHtml(value);
+      const rawQuery = String(query || "").trim();
+      if (!rawQuery) return safe;
+      const compactValue = normalize(value);
+      const compactQuery = normalize(rawQuery);
+      if (!compactQuery || !compactValue.includes(compactQuery)) return safe;
+      // 일본어/한글 검색은 조합형 문자가 섞일 수 있어 안전하게 전체 강조만 적용합니다.
+      return '<span class="highlight">' + safe + '</span>';
+    }
+
+    function getSearchText(v) {
+      return [
+        v.id,
+        v.meaning,
+        v.base.text, v.base.kana,
+        v.masu.text, v.masu.kana,
+        v.negative.text, v.negative.kana
+      ].join(" ");
+    }
+
+    function filteredVerbs() {
+      const q = normalize(state.query);
+      if (!q) return verbs;
+      return verbs.filter((v) => normalize(getSearchText(v)).includes(q));
+    }
+
+    function formBlock(v, key) {
+      const form = v[key];
+      const label = formLabels[key];
+      const aria = `${v.base.text} ${label} 발음 듣기`;
+      return `
+        <div class="form-cell">
+          <div>
+            <span class="label">${label}</span>
+            <p class="jp">${highlight(form.text, state.query)}</p>
+            <span class="kana">${highlight(form.kana, state.query)}</span>
+          </div>
+          <button type="button" class="sound" data-speak="${escapeHtml(form.kana)}" aria-label="${escapeHtml(aria)}">🔊</button>
+        </div>
+      `;
+    }
+
+    function render() {
+      const items = filteredVerbs();
+      $("#resultText").innerHTML = `검색 결과 <strong>${items.length}</strong> / ${verbs.length}`;
+      $("#topCounter").textContent = `${verbs.length}개`;
+      $("#searchClearBtn").classList.toggle("show", state.query.length > 0);
+      $("#emptyBox").classList.toggle("show", items.length === 0);
+      $("#verbList").innerHTML = items.map((v) => `
+        <article class="verb-card">
+          <div class="card-head">
+            <div class="no">${String(v.id).padStart(3, "0")}</div>
+            <div>
+              <p class="meaning">${highlight(v.meaning, state.query)}</p>
+              <p class="hint">${highlight(v.base.text, state.query)} · ${highlight(v.base.kana, state.query)}</p>
+            </div>
+          </div>
+          <div class="forms">
+            ${formBlock(v, "base")}
+            ${formBlock(v, "masu")}
+            ${formBlock(v, "negative")}
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function pickJapaneseVoice() {
+      const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+      state.voice = voices.find((voice) => /^ja[-_]?JP/i.test(voice.lang)) || voices.find((voice) => /^ja/i.test(voice.lang)) || null;
+    }
+
+    function speak(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("이 브라우저에서는 음성 합성을 지원하지 않습니다.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "ja-JP";
+      utterance.rate = 0.78;
+      utterance.pitch = 1;
+      if (state.voice) utterance.voice = state.voice;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      pickJapaneseVoice();
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.onvoiceschanged = pickJapaneseVoice;
+      }
+
+      $("#searchBox").addEventListener("click", () => $("#searchInput").focus());
+      $("#searchIconBtn").addEventListener("click", () => $("#searchInput").focus());
+      $("#searchInput").addEventListener("input", (event) => {
+        state.query = event.target.value;
+        render();
+      });
+      $("#searchInput").addEventListener("compositionend", (event) => {
+        state.query = event.target.value;
+        render();
+      });
+      $("#searchClearBtn").addEventListener("click", () => {
+        state.query = "";
+        $("#searchInput").value = "";
+        $("#searchInput").focus();
+        render();
+      });
+      $("#verbList").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-speak]");
+        if (!button) return;
+        event.preventDefault();
+        event.stopPropagation();
+        speak(button.dataset.speak);
+      });
+
+      render();
+    });
+  </script>
+</body>
+</html>
