@@ -356,6 +356,250 @@
       }
     }
 
+  
+
+    /* ===== v4: 히라가나를 일본어 위에 표시 + 전체 굵기 노멀 ===== */
+    * {
+      font-weight: 400 !important;
+    }
+    strong, b, h1, .meaning, .label, .no, .counter, .summary strong {
+      font-weight: 400 !important;
+    }
+    h1 {
+      font-size: clamp(36px, 9.5vw, 46px) !important;
+      letter-spacing: -0.055em !important;
+    }
+    .meaning {
+      font-size: 18px !important;
+      line-height: 1.28 !important;
+    }
+    .hint {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2px !important;
+      margin-top: 5px !important;
+    }
+    .head-kana {
+      display: block !important;
+      color: #64748b !important;
+      font-size: 16px !important;
+      line-height: 1.08 !important;
+      letter-spacing: -0.03em !important;
+    }
+    .head-jp {
+      display: block !important;
+      color: #334155 !important;
+      font-size: 18px !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.04em !important;
+    }
+    .form-cell {
+      align-items: stretch !important;
+      padding: 15px 13px 16px !important;
+      cursor: pointer !important;
+    }
+    .label {
+      margin-bottom: 9px !important;
+      font-size: 12px !important;
+    }
+    .kana,
+    .kana-top {
+      display: block !important;
+      margin: 0 0 6px !important;
+      color: #64748b !important;
+      font-size: 18px !important;
+      line-height: 1.12 !important;
+      letter-spacing: -0.025em !important;
+    }
+    .jp {
+      margin: 0 !important;
+      color: #0f172a !important;
+      font-size: 30px !important;
+      line-height: 1.12 !important;
+      letter-spacing: -0.045em !important;
+    }
+    @media (min-width: 440px) {
+      .form-cell {
+        min-height: 166px !important;
+        padding: 17px 13px 18px !important;
+      }
+      .kana,
+      .kana-top {
+        font-size: 18px !important;
+        margin-bottom: 7px !important;
+      }
+      .jp {
+        font-size: 31px !important;
+      }
+    }
+    @media (max-width: 380px) {
+      .kana,
+      .kana-top {
+        font-size: 16px !important;
+      }
+      .jp {
+        font-size: 27px !important;
+      }
+      .head-kana { font-size: 15px !important; }
+      .head-jp { font-size: 17px !important; }
+    }
+
+
+    /* ===== v5: 첨부 예시처럼 히라가나를 일본어 위에 배치 ===== */
+    body,
+    body * {
+      font-weight: 400 !important;
+    }
+
+    .verb-card {
+      padding: 16px 14px 15px !important;
+      border-radius: 22px !important;
+      background: rgba(255,255,255,.95) !important;
+      box-shadow: 0 8px 20px rgba(14, 116, 144, .06) !important;
+    }
+
+    .card-head {
+      display: block !important;
+      margin: 0 0 12px !important;
+    }
+
+    .main-word-wrap {
+      position: relative !important;
+      display: block !important;
+      padding: 2px 2px 0 !important;
+      cursor: pointer !important;
+    }
+
+    .main-ruby,
+    .form-ruby {
+      ruby-position: over !important;
+      -webkit-ruby-position: before !important;
+    }
+
+    .main-ruby rt,
+    .form-ruby rt {
+      color: #64748b !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.04em !important;
+      text-align: center !important;
+    }
+
+    .main-ruby rt {
+      font-size: 18px !important;
+      line-height: 1 !important;
+    }
+
+    .main-rb {
+      display: inline-block !important;
+      margin-top: 2px !important;
+      color: #0f172a !important;
+      font-size: 39px !important;
+      line-height: 1.06 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.055em !important;
+      font-kerning: none !important;
+      font-feature-settings: "palt" 1 !important;
+      font-variant-east-asian: proportional-width !important;
+    }
+
+    .card-meta {
+      display: flex !important;
+      align-items: center !important;
+      gap: 7px !important;
+      margin-top: 6px !important;
+      color: #64748b !important;
+      font-size: 13px !important;
+      line-height: 1.25 !important;
+      letter-spacing: -0.03em !important;
+    }
+
+    .card-no {
+      color: #94a3b8 !important;
+    }
+
+    .card-meaning {
+      color: #334155 !important;
+    }
+
+    .forms {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 8px !important;
+      padding: 12px 11px !important;
+      border: 1px solid #d7effc !important;
+      border-radius: 19px !important;
+      background: #f8fdff !important;
+    }
+
+    .form-cell {
+      display: block !important;
+      min-height: auto !important;
+      padding: 11px 12px 12px !important;
+      border: 1px solid #e0f2fe !important;
+      border-radius: 15px !important;
+      background: #ffffff !important;
+      cursor: pointer !important;
+    }
+
+    .form-cell:active,
+    .main-word-wrap:active {
+      transform: scale(.99) !important;
+    }
+
+    .label {
+      display: block !important;
+      width: auto !important;
+      margin: 0 0 8px !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      color: #64748b !important;
+      font-size: 12px !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.03em !important;
+      font-weight: 400 !important;
+    }
+
+    .form-ruby rt {
+      font-size: 17px !important;
+      line-height: 1 !important;
+    }
+
+    .form-rb {
+      display: inline-block !important;
+      color: #0f172a !important;
+      font-size: 31px !important;
+      line-height: 1.08 !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.05em !important;
+      font-kerning: none !important;
+      font-feature-settings: "palt" 1 !important;
+      font-variant-east-asian: proportional-width !important;
+      word-break: keep-all !important;
+    }
+
+    .highlight {
+      background: #fff7cc !important;
+      border-radius: 5px !important;
+      padding: 0 .03em !important;
+    }
+
+    @media (min-width: 440px) {
+      .main-rb { font-size: 40px !important; }
+      .main-ruby rt { font-size: 19px !important; }
+      .form-rb { font-size: 32px !important; }
+      .form-ruby rt { font-size: 18px !important; }
+    }
+
+    @media (max-width: 380px) {
+      .verb-card { padding: 15px 13px 14px !important; }
+      .main-rb { font-size: 36px !important; }
+      .main-ruby rt { font-size: 17px !important; }
+      .form-rb { font-size: 28px !important; }
+      .form-ruby rt { font-size: 16px !important; }
+      .forms { padding: 11px 10px !important; }
+    }
+
   </style>
 </head>
 <body>
@@ -363,7 +607,7 @@
     <header class="top">
       <div class="title-wrap">
         <h1>일본어 동사 500</h1>
-        <p class="sub">검색 후 기본형·ます형·부정형을 한 칸에서 바로 확인하고, 칸을 누르면 발음이 나옵니다.</p>
+        <p class="sub">검색 후 기본형·ます형·부정형을 한 칸에서 확인합니다. 히라가나는 한자 위에만 표시되고, 칸을 누르면 발음이 나옵니다.</p>
       </div>
       <div class="counter" id="topCounter">500개</div>
     </header>
@@ -376,7 +620,7 @@
 
     <div class="summary">
       <span id="resultText">검색 결과 <strong>500</strong> / 500</span>
-      <span>칸을 누르면 발음</span>
+      <span>히라가나 위 표시 · 칸 터치 발음</span>
     </div>
 
     <main>
@@ -385,7 +629,7 @@
     </main>
 
     <footer class="footer">
-      기존 화면 요소는 제거하고 검색 중심 카드만 남겼습니다. 각 칸을 누르면 브라우저의 일본어 음성 합성으로 발음이 재생되며, 기기별 음색이 다를 수 있습니다.
+      검색 중심 카드만 남겼습니다. 각 칸은 히라가나가 위에, 일본어가 아래에 표시되며 칸을 누르면 브라우저의 일본어 음성 합성으로 발음이 재생됩니다.
     </footer>
   </div>
 
@@ -447,17 +691,83 @@
       return verbs.filter((v) => normalize(getSearchText(v)).includes(q));
     }
 
+    function isKanjiChar(char) {
+      return /[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF々〆ヶ]/.test(char);
+    }
+
+    function splitJapaneseRuns(text) {
+      const runs = [];
+      let current = "";
+      let currentType = "";
+      Array.from(String(text || "")).forEach((char) => {
+        const type = isKanjiChar(char) ? "kanji" : "other";
+        if (type !== currentType && current) {
+          runs.push({ type: currentType, value: current });
+          current = "";
+        }
+        currentType = type;
+        current += char;
+      });
+      if (current) runs.push({ type: currentType, value: current });
+      return runs;
+    }
+
+    function findNextOtherRun(runs, startIndex) {
+      for (let i = startIndex + 1; i < runs.length; i += 1) {
+        if (runs[i].type === "other" && runs[i].value) return runs[i].value;
+      }
+      return "";
+    }
+
+    function rubyBlock(text, kana, className) {
+      const rbClass = className === "main-ruby" ? "main-rb" : "form-rb";
+      const runs = splitJapaneseRuns(text);
+      if (!runs.some((run) => run.type === "kanji")) {
+        return `<span class="${className}-line"><span class="${rbClass}">${highlight(text, state.query)}</span></span>`;
+      }
+
+      let kanaIndex = 0;
+      const html = runs.map((run, index) => {
+        if (run.type === "kanji") {
+          const nextOther = findNextOtherRun(runs, index);
+          let reading = "";
+          if (nextOther) {
+            const found = kana.indexOf(nextOther, kanaIndex);
+            if (found >= kanaIndex) {
+              reading = kana.slice(kanaIndex, found);
+              kanaIndex = found;
+            } else {
+              reading = kana.slice(kanaIndex, kanaIndex + run.value.length);
+              kanaIndex += reading.length;
+            }
+          } else {
+            reading = kana.slice(kanaIndex);
+            kanaIndex = kana.length;
+          }
+          return `<ruby class="${className}"><span class="${rbClass}">${highlight(run.value, state.query)}</span><rt>${highlight(reading, state.query)}</rt></ruby>`;
+        }
+
+        const literal = run.value;
+        if (kana.slice(kanaIndex, kanaIndex + literal.length) === literal) {
+          kanaIndex += literal.length;
+        } else {
+          const found = kana.indexOf(literal, kanaIndex);
+          if (found >= kanaIndex) kanaIndex = found + literal.length;
+        }
+        return `<span class="${rbClass}">${highlight(literal, state.query)}</span>`;
+      }).join("");
+
+      return `<span class="${className}-line">${html}</span>`;
+    }
+
     function formBlock(v, key) {
       const form = v[key];
       const label = formLabels[key];
       const aria = `${v.base.text} ${label} 발음 듣기`;
       return `
         <div class="form-cell" data-speak="${escapeHtml(form.kana)}" role="button" tabindex="0" aria-label="${escapeHtml(aria)}">
-          <div>
-            <span class="label">${label}</span>
-            <p class="jp">${highlight(form.text, state.query)}</p>
-            <span class="kana">${highlight(form.kana, state.query)}</span>
-          </div>
+          <span class="label">${label}</span>
+          ${rubyBlock(form.text, form.kana, "form-ruby")}
         </div>
       `;
     }
@@ -471,10 +781,12 @@
       $("#verbList").innerHTML = items.map((v) => `
         <article class="verb-card">
           <div class="card-head">
-            <div class="no">${String(v.id).padStart(3, "0")}</div>
-            <div>
-              <p class="meaning">${highlight(v.meaning, state.query)}</p>
-              <p class="hint">${highlight(v.base.text, state.query)} · ${highlight(v.base.kana, state.query)}</p>
+            <div class="main-word-wrap" data-speak="${escapeHtml(v.base.kana)}" role="button" tabindex="0" aria-label="${escapeHtml(v.base.text + ' 기본형 발음 듣기')}">
+              ${rubyBlock(v.base.text, v.base.kana, "main-ruby")}
+            </div>
+            <div class="card-meta">
+              <span class="card-no">${String(v.id).padStart(3, "0")}</span>
+              <span class="card-meaning">${highlight(v.meaning, state.query)}</span>
             </div>
           </div>
           <div class="forms">
@@ -528,7 +840,7 @@
         render();
       });
       $("#verbList").addEventListener("click", (event) => {
-        const cell = event.target.closest(".form-cell[data-speak]");
+        const cell = event.target.closest(".form-cell[data-speak], .main-word-wrap[data-speak]");
         if (!cell) return;
         event.preventDefault();
         speak(cell.dataset.speak);
@@ -536,7 +848,7 @@
 
       $("#verbList").addEventListener("keydown", (event) => {
         if (event.key !== "Enter" && event.key !== " ") return;
-        const cell = event.target.closest(".form-cell[data-speak]");
+        const cell = event.target.closest(".form-cell[data-speak], .main-word-wrap[data-speak]");
         if (!cell) return;
         event.preventDefault();
         speak(cell.dataset.speak);
