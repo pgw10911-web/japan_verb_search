@@ -600,6 +600,30 @@
       .forms { padding: 11px 10px !important; }
     }
 
+
+    /* ===== v7: 동사 그룹 표시 ===== */
+    .group-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 4px 8px !important;
+      border: 1px solid #bae6fd !important;
+      border-radius: 999px !important;
+      background: #eef9ff !important;
+      color: #0369a1 !important;
+      font-size: 12px !important;
+      line-height: 1 !important;
+      letter-spacing: -0.03em !important;
+      white-space: nowrap !important;
+      font-weight: 400 !important;
+    }
+    .group-1 { background: #eff6ff !important; color: #1d4ed8 !important; border-color: #bfdbfe !important; }
+    .group-2 { background: #f0fdf4 !important; color: #15803d !important; border-color: #bbf7d0 !important; }
+    .group-3 { background: #fff7ed !important; color: #c2410c !important; border-color: #fed7aa !important; }
+    .card-meta {
+      flex-wrap: wrap !important;
+    }
+
   </style>
 </head>
 <body>
@@ -620,7 +644,7 @@
 
     <div class="summary">
       <span id="resultText">검색 결과 <strong>500</strong> / 500</span>
-      <span>히라가나 위 표시 · 칸 터치 발음</span>
+      <span>히라가나 위 표시 · 그룹 구분 · 칸 터치 발음</span>
     </div>
 
     <main>
@@ -629,7 +653,7 @@
     </main>
 
     <footer class="footer">
-      검색 중심 카드만 남겼습니다. 각 칸은 히라가나가 위에, 일본어가 아래에 표시되며 칸을 누르면 브라우저의 일본어 음성 합성으로 발음이 재생됩니다.
+      검색 중심 카드만 남겼습니다. 각 단어는 1그룹·2그룹·3그룹동사로 구분되며, 칸을 누르면 브라우저의 일본어 음성 합성으로 발음이 재생됩니다.
     </footer>
   </div>
 
@@ -675,10 +699,24 @@
       return '<span class="highlight">' + safe + '</span>';
     }
 
+
+    function groupLabel(group) {
+      if (group === "ichidan") return "2그룹동사";
+      if (group === "suru" || group === "kuru") return "3그룹동사";
+      return "1그룹동사";
+    }
+
+    function groupClass(group) {
+      if (group === "ichidan") return "group-2";
+      if (group === "suru" || group === "kuru") return "group-3";
+      return "group-1";
+    }
+
     function getSearchText(v) {
       return [
         v.id,
         v.meaning,
+        groupLabel(v.group), v.group,
         v.base.text, v.base.kana,
         v.masu.text, v.masu.kana,
         v.negative.text, v.negative.kana
@@ -786,6 +824,7 @@
             </div>
             <div class="card-meta">
               <span class="card-no">${String(v.id).padStart(3, "0")}</span>
+              <span class="group-pill ${groupClass(v.group)}">${groupLabel(v.group)}</span>
               <span class="card-meaning">${highlight(v.meaning, state.query)}</span>
             </div>
           </div>
